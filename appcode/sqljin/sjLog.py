@@ -1,37 +1,35 @@
 import logging
 from datetime import datetime
+from pathlib import Path
 
-logts = str(datetime.now().strftime("%Y%m%d-%H%M%S"))
 
-
-def logging_start(logname:str = 'sqljin'):
+def logging_start(logname:str = 'sqljin', logfilepath:Path = '../appcode/logs/sqljin.{time}.txt'):
+    logts = str(datetime.now().strftime("%Y%m%d-%H%M%S"))
+    logpath = Path(str(logfilepath.resolve()).replace('{time}', logts))    
+    logpath.parents[0].mkdir(parents=True, exist_ok=True)
+    
     log = logging.getLogger(logname)
     logformat: logging.Formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(name)s:  %(message)s')
     log.setLevel(logging.DEBUG)
+    
+    log.handlers.clear
+
+    shandler = logging.StreamHandler()
+    shandler.setFormatter(logformat)
+    shandler.setLevel(logging.DEBUG)
+    log.addHandler(shandler)
+
+    fhandler = logging.FileHandler(logpath)
+    fhandler.setFormatter(logformat)
+    fhandler.setLevel(logging.DEBUG)
+    log.addHandler(fhandler)
 
     return log
 
 
-def addhandler(logname:str, handlename:str = '', loglevel:int = logging.INFO, logfilepath:str='' ) -> logging.FileHandler:
-    hname = logfilepath if name == '' else name
-    ts = timestamp
-    hlogfilepath = str(logfilepath).replace(r'{time}', ts).replace(r'{ts}', ts).replace(r'{timestamp}', ts)
-
-    if hlogfilepath == '':
-        handler = logging.StreamHandler()
-        htype = 'streaming'
-    else:
-        handler = logging.FileHandler(hlogfilepath, 'w+')
-        htype = 'file'
-
-    handler.setFormatter(self.logformat)
-    handler.setLevel(hlvl)
-    self.log.addHandler(handler)
-    self.logHandlers[hname] = handler
-    return handler
-
-log = start_logging()
-
 if __name__ == '__main__':
-    pass
-
+    filepath = Path('../appcode/logs/applog.{time}.txt')
+    log = logging_start('sqljin', filepath)
+    log.info('First Log')
+    log.debug('logging test has commenced!')
+    log.warning('Final Log')
