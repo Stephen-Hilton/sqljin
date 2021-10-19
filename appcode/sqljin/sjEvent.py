@@ -32,6 +32,7 @@ if __name__ == '__main__':
     log.info('Setting Up Event Framework')
     add_handler('print', print )
     add_handler('log.warn', log.warn )
+    add_handler('log.warn', log.error )
     add_handler('log', log.debug )
     broadcast('print', 'this is a test of event based print')
     broadcast('log.warn', 'whoo hoo!')

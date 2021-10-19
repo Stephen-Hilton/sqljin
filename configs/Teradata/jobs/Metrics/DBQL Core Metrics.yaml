@@ -1,0 +1,59 @@
+description: Download vt_dbql_core_daily output.  One year (365 days) on Transcend Production ran for 5min and generated 56k rows, for a filesize of 18MB.
+version: 1
+tasks:
+
+{% set run = namespace(completed=[]) if run is not defined else run %}
+{% include "vt_dbql_core.j2" %}
+
+{% set export_all = True if export_all is not defined else export_all %}
+{% set chart = True if chart is not defined else chart %}
+
+
+{% if export_all %}
+- name: "Export entire vt_dbql_core (export_all=true)"
+  connect: source
+  export:
+    file: dbql_core.csv
+    sql: Select * from vt_dbql_core order by LogDate, Application_Use, Statement_Bucket
+{% endif %}
+
+
+
+# for CHARTING, let's just blast out the graphs via a loop:
+{% if chart %}
+
+{% for dimension in ['Application','Application_Company','Application_Use','Statement_Bucket','Statement_Outcome','UserType','Department','Organization','LogDate'] %}
+{% for metricprefix in ['Request','Statement'] %}
+
+- name: Export Statement Counts per day for graphing
+  connect: source
+  export:
+    file: dbql_core_{{ metricprefix }}_x_{{ dimension }}.csv
+    sql: |
+      select
+       coalesce( cast({{ dimension }} as varchar(128)), 'Unknown') as "Breakout" -- xaxis
+      ,sum({{ metricprefix }}_Total_Cnt) as "Total {{ metricprefix }} Count (Bars)" -- Bars
+       {% set metricsuffixs = ['SubSecond','Tactical','Error','Spool_Error','TASM_Abort','Abort','NoIO','InMem','PhysIO','AllAmp','Utility','QueryGrid']%}
+       {% for metricsuffix in metricsuffixs %}
+      ,sum({{ metricprefix }}_{{ metricsuffix }}_Cnt) (BigInt) as "{{ metricsuffix }} Count" -- Line
+       {% endfor %}
+      from vt_dbql_core
+      group by 1
+      order by 1
+
+- name: Chart query per day over time
+  chart:
+    command: chart/barline_xLabels_yBar_yLine.py
+    params:
+      - "csvfile:dbql_core_{{ metricprefix }}_x_{{ dimension }}.csv"
+      - "title:Count of {{ metricprefix }} by Day, by {{ dimension }} - {{ siteid }}"
+      - "height:4"
+      - "width:16"
+      - "logscale:False"
+      - "xrotate:{{ xrotate | default ('90') }}"
+      - "legendy:{{ legendy | default ('-0.3') }}"
+      - "legendx:{{ legendx | default ('0.5') }}"
+
+{% endfor %}
+{% endfor %}
+{% endif %}

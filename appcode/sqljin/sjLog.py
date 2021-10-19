@@ -3,9 +3,10 @@ from datetime import datetime
 from pathlib import Path
 
 
-def logging_start(logname:str = 'sqljin', logfilepath:Path = '../appcode/logs/sqljin.{time}.txt'):
+
+def logging_start(logname:str = 'sqljin', logpath:Path = '../appcode/logs', logfile:str = 'applog.{time}.log'):
     logts = str(datetime.now().strftime("%Y%m%d-%H%M%S"))
-    logpath = Path(str(logfilepath.resolve()).replace('{time}', logts))    
+    logpath = Path(str(Path(logpath.resolve() / logfile)).replace('{time}', logts)  )  
     logpath.parents[0].mkdir(parents=True, exist_ok=True)
     
     log = logging.getLogger(logname)
@@ -28,8 +29,7 @@ def logging_start(logname:str = 'sqljin', logfilepath:Path = '../appcode/logs/sq
 
 
 if __name__ == '__main__':
-    filepath = Path('../appcode/logs/applog.{time}.txt')
-    log = logging_start('sqljin', filepath)
+    log = logging_start('sqljin', Path('../appcode/logs'), 'applog.{time}.txt' )
     log.info('First Log')
     log.debug('logging test has commenced!')
     log.warning('Final Log')

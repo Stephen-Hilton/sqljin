@@ -1,0 +1,85 @@
+{% set run = namespace(completed=[]) if run is not defined else run %}
+{% if not 'vt_queries_by_runtime_bucket' in run.completed %}
+
+- name: "Create vt_queries_by_runtime_bucket"
+  connect: source
+  execute:
+    sql: |
+      create volatile table vt_queries_by_runtime_bucket as
+      (
+        Select
+         LogDate
+        ,UserName
+        ,Count(*) as Total_Request_Count
+        ,Count(CASE WHEN RT_Sec  <    1                   THEN 1 END) AS "RT < 1 sec"
+        ,Count(CASE WHEN RT_Sec >=    1 AND RT_Sec <    5 THEN 1 END) AS "RT 1-5 sec"
+        ,Count(CASE WHEN RT_Sec >=    5 AND RT_Sec <   10 THEN 1 END) AS "RT 5-10 sec"
+        ,Count(CASE WHEN RT_Sec >=   10 AND RT_Sec <   30 THEN 1 END) AS "RT 10-30 sec"
+        ,Count(CASE WHEN RT_Sec >=   30 AND RT_Sec <   60 THEN 1 END) AS "RT 30-60 sec"
+        ,Count(CASE WHEN RT_Sec >=   60 AND RT_Sec <  300 THEN 1 END) AS "RT 1-5 min"
+        ,Count(CASE WHEN RT_Sec >=  300 AND RT_Sec <  600 THEN 1 END) AS "RT 5-10 min"
+        ,Count(CASE WHEN RT_Sec >=  600 AND RT_Sec < 1800 THEN 1 END) AS "RT 10-30 min"
+        ,Count(CASE WHEN RT_Sec >= 1800 AND RT_Sec < 3600 THEN 1 END) AS "RT 30-60 min"
+        ,Count(CASE WHEN RT_Sec >  3600                   THEN 1 END) AS "RT > 1 hour"
+
+        ,cast(avg(CASE WHEN RT_Sec  <    1                   THEN RT_Sec END) as decimal(38,6)) AS "Avg RT < 1 sec"
+        ,cast(avg(CASE WHEN RT_Sec >=    1 AND RT_Sec <    5 THEN RT_Sec END) as decimal(38,6)) AS "Avg RT 1-5 sec"
+        ,cast(avg(CASE WHEN RT_Sec >=    5 AND RT_Sec <   10 THEN RT_Sec END) as decimal(38,6)) AS "Avg RT 5-10 sec"
+        ,cast(avg(CASE WHEN RT_Sec >=   10 AND RT_Sec <   30 THEN RT_Sec END) as decimal(38,6)) AS "Avg RT 10-30 sec"
+        ,cast(avg(CASE WHEN RT_Sec >=   30 AND RT_Sec <   60 THEN RT_Sec END) as decimal(38,6)) AS "Avg RT 30-60 sec"
+        ,cast(avg(CASE WHEN RT_Sec >=   60 AND RT_Sec <  300 THEN RT_Sec END) as decimal(38,6)) AS "Avg RT 1-5 min"
+        ,cast(avg(CASE WHEN RT_Sec >=  300 AND RT_Sec <  600 THEN RT_Sec END) as decimal(38,6)) AS "Avg RT 5-10 min"
+        ,cast(avg(CASE WHEN RT_Sec >=  600 AND RT_Sec < 1800 THEN RT_Sec END) as decimal(38,6)) AS "Avg RT 10-30 min"
+        ,cast(avg(CASE WHEN RT_Sec >= 1800 AND RT_Sec < 3600 THEN RT_Sec END) as decimal(38,6)) AS "Avg RT 30-60 min"
+        ,cast(avg(CASE WHEN RT_Sec >  3600                   THEN RT_Sec END) as decimal(38,6)) AS "Avg RT > 1 hour"
+
+        FROM(
+            Select {{ dbc.logdt }} as LogDate, UserName
+            ,((FirstRespTime - StartTime) HOUR(3) TO SECOND(6)) AS Execution_Time
+            ,ZEROIFNULL(CAST( EXTRACT(HOUR   FROM Execution_Time) * 3600 +
+                              EXTRACT(MINUTE FROM Execution_Time) * 60 +
+                              EXTRACT(SECOND FROM Execution_Time) AS DECIMAL(32,4))) AS RT_Sec
+            FROM {{ dbc.log }}
+            WHERE LogDate BETWEEN {{ startdate | default('date -31') }} and {{ enddate | default('date-1') }}
+        ) ResponseT
+        Group By 1,2
+      ) with data
+      primary index (LogDate, UserName)
+      on commit preserve rows
+
+- name: "Collect stats on vt_queries_by_runtime_bucket"
+  connect: source
+  execute:
+    sql: collect stats on vt_queries_by_runtime_bucket column(LogDate, UserName)
+
+
+
+{% if reconcile %}
+
+- name: "RECONCILE vt_queries_by_runtime_bucket"
+  connect: source
+  export:
+    file: queries_by_runtime_bucket_RECONCILE.csv
+    sql: |
+      Select 'vt_queries_by_runtime_bucket -- aggregate all RT fields' as testname
+      ,count(distinct UserName) as Distinct_UserNames
+      ,sum("RT < 1 sec"+"RT 1-5 sec"+"RT 5-10 sec"+"RT 10-30 sec"+"RT 30-60 sec"+"RT 1-5 min"+
+           "RT 5-10 min"+"RT 10-30 min"+"RT 30-60 min"+"RT > 1 hour") as Total_Request_Count_by_adding_RT
+      from vt_queries_by_runtime_bucket
+          union all
+      Select 'vt_queries_by_runtime_bucket -- sum Total_Request_Count' as testname
+      ,count(distinct UserName) as Distinct_UserNames
+      ,sum(Total_Request_Count) as Total_Request_Count
+      from vt_queries_by_runtime_bucket
+          union all
+      Select 'Direct Pull of {{ dbc.log }}'
+      ,count(distinct UserName) as Distinct_UserNames
+      ,count(*)
+      FROM {{ dbc.log }}
+      WHERE {{ dbc.logdt }} BETWEEN {{ startdate | default('date -31') }} and {{ enddate | default('date-1') }}
+
+{% endif %}
+
+
+{% endif %}
+{{ run.completed.append('vt_queries_by_runtime_bucket') or '' }}

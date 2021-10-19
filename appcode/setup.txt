@@ -1,0 +1,3 @@
+
+C:\git\sqljin\appcode\env\Lib\site-packages\qt6_applications\Qt\bin\designer.exe
+

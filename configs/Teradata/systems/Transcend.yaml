@@ -1,0 +1,6 @@
+host: tdprd.td.teradata.com
+logmech: LDAP
+encrypt: False
+plugin-local: teradata.py
+
+{% include "Teradata.creds.yaml" %}

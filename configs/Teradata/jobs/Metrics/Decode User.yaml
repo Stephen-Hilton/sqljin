@@ -1,0 +1,14 @@
+description: Print out table vt_decode_user, for reconciliation purposes.
+version: 1
+tasks:
+
+{% include "vt_decode_user.j2" %}
+
+- name: Export vt_decode_user with all data
+  connect: source
+  export:
+    file: vt_decode_user.csv
+    sql: |
+      select hashrow(UserName), u.*
+      from vt_decode_user as u
+      order by Organization, Department, UserName

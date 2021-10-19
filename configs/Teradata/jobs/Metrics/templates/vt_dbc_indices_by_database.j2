@@ -1,0 +1,40 @@
+{% set run = namespace(completed=[]) if run is not defined else run %}
+{% if not 'vt_dbc_indices_by_database' in run.completed %}
+
+{% include 'vt_decode_indextype.j2' %}
+
+- name: Create count of indices by database
+  connect: source
+  execute:
+    sql: |
+      create volatile table vt_dbc_indices_by_database as
+      (
+        select
+           coalesce(Inds.DatabaseName, 'Unused') AS DatabaseName
+          ,coalesce(IK.Description, 'Unknown - ' || Inds.IndexType) AS IndexType_Desc
+          ,coalesce(IK.IndexType_Bucket, 'Unknown - ' || Inds.IndexType) AS IndexType_Bucket
+          ,Inds.UniqueFlag as Unique_Flag
+          ,zeroifnull(Inds.IndexCount) AS Index_Count
+          ,zeroifnull(DistinctColumnCount) as Distinct_Column_Count
+          ,zeroifnull(DistinctTableCount) as Distinct_Table_Count
+        from
+          (
+            select DatabaseName, IndexType, UniqueFlag
+            ,count(distinct trim(databasename)||'.'||trim(tablename)||'.'||trim(IndexNumber)) as IndexCount
+            ,count(distinct trim(databasename)||'.'||trim(tablename)||'.'||trim(ColumnName)) AS DistinctColumnCount
+            ,count(distinct trim(databasename)||'.'||trim(tablename)) as DistinctTableCount
+            FROM DBC.IndicesV GROUP BY 1,2,3
+          ) Inds
+        full outer join vt_decode_indextype AS IK
+          on IK.IndexType = Inds.IndexType
+         and IK.UniqueFlag = Inds.UniqueFlag
+      ) with data
+      no primary index on commit preserve rows
+
+- name: Collect stats on vt_dbc_indices_by_database
+  connect: source
+  execute:
+    sql: collect stats on vt_dbc_indices_by_database column(DatabaseName)
+
+{% endif %}
+{{ run.completed.append('vt_dbc_indices_by_database') or '' }}

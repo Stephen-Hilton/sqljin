@@ -1,0 +1,82 @@
+{% set run = namespace(completed=[]) if run is not defined else run %}
+{% if not 'vt_join_frequency' in run.completed %}
+
+
+### ============= SET DEFAULT EXECUTION BEHAVIOR =============
+{% set reconcile      = false if reconcile       is not defined else reconcile %}
+{% set save_prework   = false if save_prework    is not defined else save_prework %}
+{% set process_chunks = 3     if process_chunks  is not defined else process_chunks %}
+
+{% include "vt_datedriver.j2" %}
+{% for ichunk in range(1, process_chunks+1) %}
+
+- name: "{{ "Create VT" if ichunk==1 else "Insert Into VT" }} map of join frequency to QueryID map prework, for performance  (chunk {{ ichunk }} of {{ process_chunks }})"
+  connect: source
+  execute:
+    sql: |
+      {% if ichunk == 1 %}
+      create volatile table vt_queryid_by_joincount as (
+      {% else %}
+      insert into vt_queryid_by_joincount
+      {% endif %}
+          Select
+           QueryID
+          {% if pdcr %}
+          ,LogDate as LogDate1
+          {% else %}
+          ,cast(CollectTimeStamp as date) as LogDate1
+          {% endif %}
+          ,Count(distinct ObjectTableName) as JoinCount
+          from {{ dbc.obj }} -- DBQLObjTbl
+          where ObjectColumnName is null
+            and ObjectTableName is not null
+            and ObjectType in ('Tab', 'Viw')
+            and LogDate1 in(Select Calendar_Date from vt_DateDriver where Process_Chunk =  {{ ichunk }})
+          group by 1,2
+      {% if ichunk == 1 %}
+      ) with data
+      primary index (QueryID, LogDate1) /* Match PI for DBQL */
+      on commit preserve rows
+      {% endif %}
+
+{% endfor %}
+
+
+- name: Collect stats on intermediate table vt_queryid_by_joincount
+  connect: source
+  execute:
+    sql: collect stats on vt_queryid_by_joincount column(QueryID, LogDate1)
+
+- name:  Create vt_join_frequency, final output
+  connect: source
+  execute:
+    sql: |
+      create multiset volatile table  vt_join_frequency  as
+      (
+        Select
+         CASE WHEN JoinCount <= 5 THEN (JoinCount (FORMAT 'Z9') (CHAR(2))) ELSE ' 6+' END as Join_Label
+        ,cast(cast(count(*) as BigInt format 'ZZZ,ZZZ,ZZZ,ZZ9') as varchar(32)) as Request_Count
+        ,cast(cast(sum(dbql.ParserCPUTime+dbql.AMPCPUtime) as decimal(32,2) format 'ZZZ,ZZZ,ZZZ,ZZ9.99') as varchar(32)) as CPU_Sec
+        ,count(distinct {{ dbc.logdt }} ) as DateCount
+        from {{ dbc.log }} as dbql
+        join vt_queryid_by_joincount as j
+          on {{ dbc.logdt }} = j.LogDate1
+         and dbql.QueryID = j.QueryID
+        group by 1
+      ) with data no primary index
+      on commit preserve rows
+
+- name: Collect Stats on vt_join_frequency
+  connect: source
+  execute:
+    sql: collect stats on vt_join_frequency column(Join_Label)
+
+{% if not save_prework %}
+- name: Drop intermediate table vt_queryid_by_joincount
+  connect: source
+  execute:
+    sql: drop table vt_queryid_by_joincount
+{% endif %}
+
+{% endif %}
+{{ run.completed.append('vt_join_frequency') or '' }}
