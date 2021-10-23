@@ -1,0 +1,11 @@
+- name: Global
+  tooltip: this is some description that pops up on hover-over.
+  source_manifest: http://raw.github.com/some/location/manifest.yaml
+
+- name: Local
+  tooltip: this is some description that pops up on hover-over.
+  source_manifest: http://raw.github.com/some/location/manifest.yaml
+
+- name: Teradata
+  tooltip: this is some description that pops up on hover-over.
+  source_manifest: http://raw.github.com/some/location/manifest.yaml

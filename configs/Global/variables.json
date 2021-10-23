@@ -1,0 +1,7 @@
+{
+    "version": "0",
+    "variables": {
+        "startdate": "2021-01-01",
+        "enddate": "2021-12-31"
+    }
+}

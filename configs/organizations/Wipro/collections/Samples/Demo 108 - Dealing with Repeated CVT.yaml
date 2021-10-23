@@ -1,0 +1,115 @@
+description: >
+  Demonstrate how to escape multiple CVT calls to avoid 'table exists' error."
+  This is done by creating a list object called 'completed' (see code comment below)
+  at the beginning of your process and adding any vt_name that you may want to test
+  and exclude later. All decode_templates use this approach to disallow repetitive runs
+  IF (and only if) the below string is included.  If you look at the pre-substitution
+  code, you can see that command below.
+
+tasks:
+
+
+# In order to escape from duplicate runs, each process must set a global namespace
+# called 'run' with an attribute list called "completed".   Creating this
+# namespace.list (run.completed) looks like this:
+
+
+########## Always include the below line in every process #############
+{% set run = namespace(completed=[]) if run is not defined else run %}
+########## Always include the above line in every process #############
+
+
+# all subsequent included templates (see below) will look for this
+# namespace.list (run.completed) and skip processing if the vt_name is found.
+# The above single line is REQUIRED if you want your process to skip re-runs.
+# All COA metrics and solutions will include this line.
+
+{% include "vt_site_info.j2" %}  # will build  vt_site_info
+{% include "vt_site_info.j2" %}  # because run.completed exists, this will be skipped
+{% include "vt_site_info.j2" %}  # because run.completed exists, this will be skipped
+
+{% include "vt_datedriver.j2" %}  # will build  vt_datedriver
+{% include "vt_datedriver.j2" %}  # because run.completed exists, this will be skipped
+
+
+# CONFIRM by looking at the Explain screen for Demo108... you should only see
+# ONE of the above vt_site_info.j2 processes (not 3)
+
+- name: "Export vt_site_info v1 (run.completed = {{ run.completed }})"
+  connect: source
+  export:
+    file: demo108_site_info_v1.csv
+    sql: Select * from vt_site_info a
+
+
+
+
+# If you want to RE-RUN ALL processes for some reason, you'll have to do 2 things:
+
+#  1a) clear the run.completed list
+{% set run.completed = [] %}
+
+#  2a) drop any volatile tables created
+- name: "Drop vt_site_info, Clear All (run.completed = {{ run.completed }})"
+  connect: source
+  execute:
+    sql: drop table vt_site_info
+
+#  2b) drop any volatile tables created
+- name: "Drop vt_datedriver, Clear All (run.completed = {{ run.completed }})"
+  connect: source
+  execute:
+    sql: drop table vt_datedriver
+
+
+
+# Now you should be able to successfully re-run the vt_site_info process:
+{% include "vt_site_info.j2" %}  # will build  vt_site_info
+{% include "vt_site_info.j2" %}  # because run.completed exists, this will be skipped
+{% include "vt_site_info.j2" %}  # because run.completed exists, this will be skipped
+
+{% include "vt_datedriver.j2" %}  # will build  vt_datedriver
+{% include "vt_datedriver.j2" %}  # because run.completed exists, this will be skipped
+
+- name: Export vt_site_info v2 (run.completed = {{ run.completed }})
+  connect: source
+  export:
+    file: demo108_site_info_v2.csv
+    sql: Select * from vt_site_info
+
+
+
+
+
+# if you want to RE-RUN JUST ONE process, and not clear the entire run.completed list,
+# you'll have to loop thru the run.completed list and remove any matching entries
+# (this is required because an entry is made for every run completed).   Don't
+# forget to also drop the vt_table from the database.
+
+#  1a) remove only ONE name from the run.completed list
+{% set tmp=[] %}
+{% for vtname in run.completed %}
+  {% if vtname != 'vt_site_info' %}
+    {{ tmp.append(vtname) or '' }}
+  {% endif %}
+{% endfor %}
+{% set run.completed = tmp %}
+
+#  2b) drop the volatile table
+- name: "Drop vt_site_info, Clear vt_site_info (run.completed = {{ run.completed }})"
+  connect: source
+  execute:
+    sql: drop table vt_site_info
+
+# Now you should be able to successfully re-re-run the vt_site_info process:
+{% include "vt_site_info.j2" %}  # will build  vt_site_info
+{% include "vt_site_info.j2" %}  # because run.completed exists, this will be skipped
+{% include "vt_site_info.j2" %}  # because run.completed exists, this will be skipped
+
+# don't rerun "vt_datedriver.j2" or you'll hit errors, since it wasn't dropped from DB
+
+- name: Export vt_site_info v3
+  connect: source
+  export:
+    file: demo108_site_info_v3.csv
+    sql: Select * from vt_site_info

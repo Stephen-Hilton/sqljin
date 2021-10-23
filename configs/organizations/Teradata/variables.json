@@ -1,0 +1,9 @@
+{
+    "version": "0",
+    "variables": {
+        "organization.name": "OrgName Here",
+        "organization.website": "http://example.com",
+        "organization.contact": "person@company.com",
+        "remember_credentials": true
+    }
+}

@@ -1,0 +1,18 @@
+version: 0
+host: tdprd.td.teradata.com
+logmech: LDAP
+encrypt: False
+plugin-local: teradata.py
+
+variables:
+  processname:
+    name: value
+    name2: value2
+    name3: value3
+  processname2:
+    name: value33
+    name4: value44
+    name5: value55
+  processname3:
+    name: value66
+    name6: value66

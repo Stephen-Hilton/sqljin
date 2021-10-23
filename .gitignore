@@ -1,5 +1,5 @@
-./env/
-./logs/
+appcode/env/
+appcode/logs/
 __pycache__/
 dev/devui_env/
 history/

@@ -1,27 +1,18 @@
-from sqljin.sjLog import logging_start
-import sqljin.sjEvent as event
-import sqljin.sjConfig as config
-from sqljin.sjPath import sjPath
+import sys 
+from sqljin.sjuUtil import sjuUtil
+from sqljin.sjoGlobal import sjoGlobal
+
+# start all utilities:
+util = sjuUtil()
+
+# TODO: update all contents
+
+# load all model objects:
+util.log.header(f'Loading Model Objects')
+sjglobal = sjoGlobal(util)
 
 
-# load paths 
-paths = sjPath(__file__)
-print(paths.appname)
+# start GUI specified
+# TODO:
 
-
-
-# load config files
-config.configs_load()
-
-
-
-# setup logging:
-log = logging_start('sqljin', paths.appcode.path('logs'), 'applog.{time}.txt')
-log.info('Application Started')
-
-# setup event framework:
-event.add_handler('print', print)
-event.broadcast('print', 'the App has started')
-event.broadcast('non-event')
-
-log.info('Application Finished')
+util.log.header('APPLICATION COMPLETE')
