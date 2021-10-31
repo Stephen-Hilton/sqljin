@@ -29,10 +29,13 @@ class sjuPath():
             return str(self._path.resolve())
     ########
 
-    def __init__(self, refPath:Path, logger:object):
+    def __init__(self, refPath:Path, logger:object, events:object):
         if refPath == '': refPath = Path(__file__)
         self.log = logger
         self.log.info('sjpath class instantiated')  
+        self.event = events
+        self.event.add_handler('yaml.load', self.loadYaml)
+        self.event.add_handler('yaml.save', self.saveYaml)
         self.reload(refPath=refPath)
 
     def reload(self, refPath:Path) -> None:
@@ -67,10 +70,11 @@ class sjuPath():
         %s""" %refPath.resolve()
         self.log.error(msg)
         raise FileNotFoundError(msg)
-
+        
 
     def getDirs(self, filepath:Path) -> dict:
         rtn = {}
+        if filepath.is_file:  filepath = Path(filepath.resolve().parent)
         for subdir in [f for f in filepath.iterdir() if f.is_dir()]:
             rtn[subdir.name] = Path(filepath / subdir)
         return rtn 
@@ -78,6 +82,7 @@ class sjuPath():
 
     def getFiles(self, filepath:Path) -> dict:
         rtn = {}
+        if filepath.is_file:  filepath = Path(filepath.resolve().parent)
         for file in [f for f in filepath.iterdir() if f.is_file() and f.name[:1] !='.' ]:
             rtn[file.name] = Path(filepath / file)
         return rtn 
@@ -85,7 +90,7 @@ class sjuPath():
 
     def getFileText(self, filepath:Path) -> str:
         ext = filepath.suffix.upper()
-        self.log.debug(f'opening {ext} file into memory string: {filepath}')
+        self.log.debug(f'loading {ext} file into memory string from location: {filepath}')
         if not filepath.exists() or filepath.stat().st_size == 0:
             self.log.error(f'file does not exist or is zero-bytes, aborting and returning "None" (null)')
             return None
@@ -94,35 +99,28 @@ class sjuPath():
         self.log.debug(f'file contents loaded into memory with {len(rtntext)} characters')
         return rtntext
 
+    def saveYaml(self, filepath:Path, yamldict:dict):
+        self.log.info(f'saving config yaml file: {filepath}')
+        self.log.info(f'config yaml file saved:  {filepath}')
 
-    def getYaml(self, filepath:Path, defaults:dict={}, constraints:dict={}) -> dict:
+    def loadYaml(self, filepath:Path, defaults:dict={}) -> dict:
+        self.log.info(f'loading YAML file: {filepath}')
         yamltext = self.getFileText(filepath)
+        self.log.info(f'processing yaml into dictionaries')
         try:
             yamldict = yaml.safe_load(yamltext)
         except Exception as ex:
             self.log.error(f'translation from yaml to dictionary failed (perhaps yaml is malformed?), returning empty dictionary')
             self.log.error(f'error message: {ex}')
-            return {}
+            self.event.broadcast()
+            return defaults
 
-        if len(defaults) >0:
+        if len(defaults) >0: 
             self.log.debug(f'applying defaults')
-            for k,v in defaults.items():
-                if k not in yamldict: yamldict[k] = v
+            for n,v in defaults.items():
+                if n not in yamldict:
+                    yamldict[n] = v
 
-        try:
-            constraints = list(constraints)
-            if len(constraints) >0:
-                self.log.debug(f'applying constraints')
-                violations = []
-                for k,v in yamldict.items():
-                    if k not in constraints:
-                        violations.append(k)
-                for k in violations:
-                    del yamldict[k]
-        except Exception as ex:
-            self.log.error(f'if supplied, constraint must be a list-like object - aborting and returning empty dictionary')
-            return {}
-            
         return yamldict
 
 

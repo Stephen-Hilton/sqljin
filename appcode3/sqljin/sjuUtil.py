@@ -7,9 +7,9 @@ try:
     from sqljin.sjuEvent import sjuEvent
     from sqljin.sjuPath import sjuPath
 except:
-    from sjuLog import sjuLog
     from sjuEvent import sjuEvent
     from sjuPath import sjuPath
+    from sjuLog import sjuLog
 
 
 ## Wrapper class to ease passing around log, paths, events
@@ -30,21 +30,22 @@ class sjuUtil():
         self.log.header('Utility Classes Loading')
         self.log.warning('logging started (obviously)')
 
+        # setup event framework:
+        self.event = sjuEvent(self.log)  # requires logging
+        self.event.add_handler('log', self.log.info)
+        self.event.broadcast('log', 'Event framework started and active')
+
         # load paths 
-        self.paths = sjuPath(__file__, self.log)
+        self.paths = sjuPath(__file__, self.log, self.event)
         str(self.paths) # this triggers the built-in logging
         self.appname = self.paths.appname
-
+    
         # finish setting up logging now that we now where we are:
         self.log.setup( self.paths.appname, self.paths.appcode.path('logs'))
         self.log.create_default_handlers()
         self.log.unbuffer()
 
-        # setup event framework:
-        self.event = sjuEvent(self.log)  # requires logging
-        self.event.add_handler('log', self.log.info)
-        self.event.broadcast('log', 'Event framework started and active')
-        self.event.broadcast('test non-existent event')
+
 
 
     @property

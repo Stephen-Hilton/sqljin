@@ -1,18 +1,17 @@
-version: 0
 host: tdprd.td.teradata.com
 logmech: LDAP
 encrypt: False
 plugin-local: teradata.py
+username: sh186014
+password: "as;dlkfj"
+icon: appcode/plugins/dbconnections/Teradata.png
+plugin: Teradata.py
+plugin-local: appcode/plugins/dbconnections/Teradata.py
+plugin-source: http://github.com/raw/somelocation/teradata.py 
 
+version: 0
 variables:
-  processname:
-    name: value
-    name2: value2
-    name3: value3
-  processname2:
-    name: value33
-    name4: value44
-    name5: value55
-  processname3:
-    name: value66
-    name6: value66
+  some1: value
+  some2: [123, 456, 789]
+  some3: 123
+  some4: true

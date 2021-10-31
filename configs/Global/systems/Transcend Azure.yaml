@@ -1,8 +1,0 @@
-host: tdprd.td.teradata.com
-logmech: LDAP
-encrypt: False
-icon: config/systems/icons/teradata.png
-plugin-local: appcode/plugins/dbconnections/teradata.py
-plugin-source: http://github.com/raw/somelocation/teradata.py 
-
-
