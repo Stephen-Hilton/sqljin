@@ -1,5 +1,5 @@
 python -m pip install pyqt6
 python -m pip install pyqt6-tools
 
-C:\git\sqljin\dev_ui\devui_env\Lib\site-packages\qt6_applications\Qt\bin\designer.exe
+C:\git\sqljin\dev\devui_env\Lib\site-packages\qt6_applications\Qt\bin\designer.exe
 

@@ -1,0 +1,987 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>main</class>
+ <widget class="QMainWindow" name="main">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1148</width>
+    <height>904</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Application Title</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="sjResources.qrc">
+    <normaloff>:/icons/icons/genie-simple.png</normaloff>:/icons/icons/genie-simple.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_15">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>SQLJin - Process Run</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="btnRefresh">
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset resource="sjResources.qrc">
+          <normaloff>:/icons/icons/reload.png</normaloff>:/icons/icons/reload.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="btnApp_Help_2">
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset resource="sjResources.qrc">
+          <normaloff>:/icons/icons/help.png</normaloff>:/icons/icons/help.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolButton_6">
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset resource="sjResources.qrc">
+          <normaloff>:/icons/icons/information-outline.png</normaloff>:/icons/icons/information-outline.png</iconset>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget_7">
+       <layout class="QVBoxLayout" name="layoutCollections_2">
+        <item>
+         <layout class="QHBoxLayout" name="layoutCollections_LabelButtons_2">
+          <item>
+           <widget class="QLabel" name="label_14">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Collections / Jobs</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="btnAdd_Collection_2">
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="sjResources.qrc">
+              <normaloff>:/icons/icons/plus.png</normaloff>:/icons/icons/plus.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="btnRemove_Collection_2">
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="sjResources.qrc">
+              <normaloff>:/icons/icons/minus.png</normaloff>:/icons/icons/minus.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="btnHelp_Collection_2">
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="sjResources.qrc">
+              <normaloff>:/icons/icons/help.png</normaloff>:/icons/icons/help.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTreeWidget" name="treeCollections_2">
+          <attribute name="headerVisible">
+           <bool>false</bool>
+          </attribute>
+          <column>
+           <property name="text">
+            <string>Collection</string>
+           </property>
+          </column>
+          <item>
+           <property name="text">
+            <string>Global - Demos</string>
+           </property>
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="icon">
+            <iconset resource="sjResources.qrc">
+             <normaloff>:/icons/icons/genie-simple.png</normaloff>:/icons/icons/genie-simple.png</iconset>
+           </property>
+           <item>
+            <property name="text">
+             <string>demo1</string>
+            </property>
+            <property name="checkState">
+             <enum>Unchecked</enum>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>demo2</string>
+            </property>
+            <property name="checkState">
+             <enum>Unchecked</enum>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>demo3</string>
+            </property>
+            <property name="checkState">
+             <enum>Unchecked</enum>
+            </property>
+           </item>
+          </item>
+          <item>
+           <property name="text">
+            <string>Teradata - Metrics</string>
+           </property>
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="icon">
+            <iconset resource="sjResources.qrc">
+             <normaloff>:/icons/icons/teradata.png</normaloff>:/icons/icons/teradata.png</iconset>
+           </property>
+           <item>
+            <property name="text">
+             <string>DBQL Core</string>
+            </property>
+            <property name="checkState">
+             <enum>Unchecked</enum>
+            </property>
+           </item>
+          </item>
+          <item>
+           <property name="text">
+            <string>Teradata - Solutions</string>
+           </property>
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="icon">
+            <iconset resource="sjResources.qrc">
+             <normaloff>:/icons/icons/teradata.png</normaloff>:/icons/icons/teradata.png</iconset>
+           </property>
+           <item>
+            <property name="text">
+             <string>Vantage Health Check</string>
+            </property>
+            <property name="checkState">
+             <enum>Unchecked</enum>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Consulting Autotune</string>
+            </property>
+            <property name="checkState">
+             <enum>Unchecked</enum>
+            </property>
+           </item>
+          </item>
+          <item>
+           <property name="text">
+            <string>Teradata - Competitve Solutions</string>
+           </property>
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="icon">
+            <iconset resource="sjResources.qrc">
+             <normaloff>:/icons/icons/teradata.png</normaloff>:/icons/icons/teradata.png</iconset>
+           </property>
+           <item>
+            <property name="text">
+             <string>BigQuery</string>
+            </property>
+            <property name="checkState">
+             <enum>Unchecked</enum>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Snowflake</string>
+            </property>
+            <property name="checkState">
+             <enum>Unchecked</enum>
+            </property>
+           </item>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="verticalLayoutWidget_6">
+       <layout class="QVBoxLayout" name="layoutSystems_2">
+        <item>
+         <layout class="QHBoxLayout" name="layoutSystems_LabelButtons_2">
+          <item>
+           <widget class="QLabel" name="label_9">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Systems</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="btnAdd_System_2">
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="sjResources.qrc">
+              <normaloff>:/icons/icons/plus.png</normaloff>:/icons/icons/plus.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="btnRemove_System_2">
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="sjResources.qrc">
+              <normaloff>:/icons/icons/minus.png</normaloff>:/icons/icons/minus.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="btnHelp_System_2">
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="sjResources.qrc">
+              <normaloff>:/icons/icons/help.png</normaloff>:/icons/icons/help.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QListWidget" name="lstSystems_2">
+          <item>
+           <property name="text">
+            <string>System</string>
+           </property>
+           <property name="checkState">
+            <enum>Unchecked</enum>
+           </property>
+           <property name="icon">
+            <iconset resource="sjResources.qrc">
+             <normaloff>:/icons/icons/database.png</normaloff>:/icons/icons/database.png</iconset>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>SQLite</string>
+           </property>
+           <property name="checkState">
+            <enum>Unchecked</enum>
+           </property>
+           <property name="icon">
+            <iconset resource="sjResources.qrc">
+             <normaloff>:/icons/icons/database.png</normaloff>:/icons/icons/database.png</iconset>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Transcend Production</string>
+           </property>
+           <property name="checkState">
+            <enum>Unchecked</enum>
+           </property>
+           <property name="icon">
+            <iconset resource="sjResources.qrc">
+             <normaloff>:/icons/icons/database.png</normaloff>:/icons/icons/database.png</iconset>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Customer System ABC</string>
+           </property>
+           <property name="checkState">
+            <enum>Unchecked</enum>
+           </property>
+           <property name="icon">
+            <iconset resource="sjResources.qrc">
+             <normaloff>:/icons/icons/database.png</normaloff>:/icons/icons/database.png</iconset>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_10">
+          <property name="text">
+           <string>Date Variable Overrides:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="layoutSystems_StartDate_2">
+          <item>
+           <widget class="QLabel" name="label_11">
+            <property name="minimumSize">
+             <size>
+              <width>60</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Start Date</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEdit_3"/>
+          </item>
+          <item>
+           <widget class="QToolButton" name="toolButton_4">
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="sjResources.qrc">
+              <normaloff>:/icons/icons/calendar-month.png</normaloff>:/icons/icons/calendar-month.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="toolButton">
+            <property name="text">
+             <string>...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="layoutSystems_EndDate_2">
+          <item>
+           <widget class="QLabel" name="label_12">
+            <property name="minimumSize">
+             <size>
+              <width>60</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>End Date</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEdit_4"/>
+          </item>
+          <item>
+           <widget class="QToolButton" name="toolButton_5">
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="sjResources.qrc">
+              <normaloff>:/icons/icons/calendar-month.png</normaloff>:/icons/icons/calendar-month.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="toolButton_2">
+            <property name="text">
+             <string>...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="layoutSystems_RunSection_2">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
+               <widget class="QLabel" name="label_13">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Status: </string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QProgressBar" name="progressBar_2">
+                <property name="value">
+                 <number>24</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QPlainTextEdit" name="plainTextEdit">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>7</pointsize>
+               </font>
+              </property>
+              <property name="plainText">
+               <string>Select a Collection/Job and System to Begin!</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <widget class="QPushButton" name="pushButton_5">
+              <property name="text">
+               <string>Explain</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_6">
+              <property name="text">
+               <string>Run</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_7">
+              <property name="text">
+               <string>Generate Scripts</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="layoutHistory">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Run History</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QComboBox" name="comboBox">
+          <property name="minimumSize">
+           <size>
+            <width>250</width>
+            <height>0</height>
+           </size>
+          </property>
+          <item>
+           <property name="text">
+            <string>Run From Last CheckPoint</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Run From The Beginning</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Process Returned .TSV</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Regenerate Charts and PPTx</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Generate BTEQ File</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Generate Jupyter Notebook</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Generate Raw SQL File</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton">
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Go!</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="tblHistory">
+        <row>
+         <property name="text">
+          <string>1</string>
+         </property>
+        </row>
+        <column>
+         <property name="text">
+          <string>icon</string>
+         </property>
+         <property name="foreground">
+          <brush brushstyle="NoBrush">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Processes</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Systems</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Run Type</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Status</string>
+         </property>
+        </column>
+        <item row="0" column="0">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="sjResources.qrc">
+           <normaloff>:/icons/icons/circle-slice-4.png</normaloff>:/icons/icons/circle-slice-4.png</iconset>
+         </property>
+        </item>
+        <item row="0" column="1">
+         <property name="text">
+          <string>BigQuery</string>
+         </property>
+        </item>
+        <item row="0" column="2">
+         <property name="text">
+          <string>Teradata</string>
+         </property>
+        </item>
+        <item row="0" column="3">
+         <property name="text">
+          <string>Direct Connect</string>
+         </property>
+        </item>
+        <item row="0" column="4">
+         <property name="text">
+          <string>Task 23/99, Awaiting Restart</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget_2">
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <layout class="QVBoxLayout" name="layoutHistory_2">
+       <item>
+        <widget class="Line" name="line_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Logs</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Filter by Level</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="comboBox_2">
+           <property name="minimumSize">
+            <size>
+             <width>75</width>
+             <height>0</height>
+            </size>
+           </property>
+           <item>
+            <property name="text">
+             <string>ALL LOGS</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>debug - and above</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>debug - only</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>info - and above</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>info - only</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>warning - and above</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>warning - only</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>error - and above</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>error - only</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>critical - and above</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>critical - only</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Search Messages for </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_2">
+           <property name="text">
+            <string>Copy to Clipboard</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QSplitter" name="splitter_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <widget class="QTableWidget" name="tblHistory_2">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <row>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>2</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>3</string>
+           </property>
+          </row>
+          <column>
+           <property name="text">
+            <string>Time</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Level</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Message</string>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+          </column>
+          <item row="0" column="0">
+           <property name="text">
+            <string>2021-11-01 13:45:01.123</string>
+           </property>
+          </item>
+          <item row="0" column="1">
+           <property name="text">
+            <string>debug</string>
+           </property>
+          </item>
+          <item row="0" column="2">
+           <property name="text">
+            <string>this is some log message that is really long.  Could be very long.</string>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>7</pointsize>
+            </font>
+           </property>
+           <property name="flags">
+            <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsEnabled</set>
+           </property>
+          </item>
+          <item row="1" column="0">
+           <property name="text">
+            <string>2021-11-01 13:45:01.123</string>
+           </property>
+          </item>
+          <item row="1" column="1">
+           <property name="text">
+            <string>debug</string>
+           </property>
+          </item>
+          <item row="1" column="2">
+           <property name="text">
+            <string>this is another really long message that somethign happened</string>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>7</pointsize>
+            </font>
+           </property>
+          </item>
+          <item row="2" column="0">
+           <property name="text">
+            <string>2021-11-01 13:45:01.123</string>
+           </property>
+          </item>
+          <item row="2" column="1">
+           <property name="text">
+            <string>info</string>
+           </property>
+          </item>
+          <item row="2" column="2">
+           <property name="text">
+            <string>A better defined message.</string>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>7</pointsize>
+            </font>
+           </property>
+           <property name="foreground">
+            <brush brushstyle="NoBrush">
+             <color alpha="255">
+              <red>180</red>
+              <green>180</green>
+              <blue>180</blue>
+             </color>
+            </brush>
+           </property>
+          </item>
+         </widget>
+         <widget class="QPlainTextEdit" name="plainTextEdit_2">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="sjResources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

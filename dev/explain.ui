@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1070</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_5">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label_6">
+       <property name="maximumSize">
+        <size>
+         <width>65</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Explain</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="maximumSize">
+        <size>
+         <width>125</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Configuration for Job:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+       </property>
+       <property name="buddy">
+        <cstring>label</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cboExplain_JobName">
+       <item>
+        <property name="text">
+         <string>Teradata - Metrics - DBQL_Core</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Running on System:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cboExplain_SystemName">
+       <item>
+        <property name="text">
+         <string>Transcend-Production (Teradata)</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="btnExplain_HelpExplain">
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="icon">
+        <iconset resource="sjResources.qrc">
+         <normaloff>:/icons/icons/help.png</normaloff>:/icons/icons/help.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="lblExplain_JobDescription">
+       <property name="frameShape">
+        <enum>QFrame::Panel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <property name="text">
+        <string>this is a super long text. Now is the tiem for all good men to comet to the aid of their country.  For what that's wworth anymore</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QSplitter" name="splitter_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QWidget" name="">
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Job Summary</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QTableWidget" name="tblExplain_StepsSummary">
+            <row>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>2</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>4</string>
+             </property>
+            </row>
+            <column>
+             <property name="text">
+              <string>Type</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Step</string>
+             </property>
+            </column>
+            <item row="0" column="0">
+             <property name="text">
+              <string>Execute</string>
+             </property>
+            </item>
+            <item row="0" column="1">
+             <property name="text">
+              <string>Did other Stuff</string>
+             </property>
+            </item>
+            <item row="1" column="0">
+             <property name="text">
+              <string>Export</string>
+             </property>
+            </item>
+            <item row="1" column="1">
+             <property name="text">
+              <string>Yet more stuff</string>
+             </property>
+            </item>
+            <item row="2" column="0">
+             <property name="text">
+              <string>Calll</string>
+             </property>
+            </item>
+            <item row="2" column="1">
+             <property name="text">
+              <string>OK, let's call this thing</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QLabel" name="label_9">
+              <property name="text">
+               <string>Search Step Detail for:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="txtExplain_FilterSteps"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Step Details:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTextBrowser" name="txtExplain_StepDetail"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="Line" name="line">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="label_8">
+           <property name="maximumSize">
+            <size>
+             <width>130</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Variables</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>Driving the above EXPLAIN... double-click variables below to edit at specific levels (see help for more detail)</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btnExplain_Refresh">
+           <property name="text">
+            <string>...</string>
+           </property>
+           <property name="icon">
+            <iconset resource="sjResources.qrc">
+             <normaloff>:/icons/icons/reload.png</normaloff>:/icons/icons/reload.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btnExplain_AddVariable">
+           <property name="text">
+            <string>...</string>
+           </property>
+           <property name="icon">
+            <iconset resource="sjResources.qrc">
+             <normaloff>:/icons/icons/plus.png</normaloff>:/icons/icons/plus.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btnExplain_RemoveVariable">
+           <property name="text">
+            <string>...</string>
+           </property>
+           <property name="icon">
+            <iconset resource="sjResources.qrc">
+             <normaloff>:/icons/icons/minus.png</normaloff>:/icons/icons/minus.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btnExplain_HelpVariables">
+           <property name="text">
+            <string>...</string>
+           </property>
+           <property name="icon">
+            <iconset resource="sjResources.qrc">
+             <normaloff>:/icons/icons/help.png</normaloff>:/icons/icons/help.png</iconset>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QTableWidget" name="tblExplain_Variables">
+         <row>
+          <property name="text">
+           <string>tdver (text)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>siteid (text)</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>pdcr (bool)</string>
+          </property>
+         </row>
+         <column>
+          <property name="text">
+           <string>VALUE</string>
+          </property>
+          <property name="font">
+           <font>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="background">
+           <color>
+            <red>215</red>
+            <green>215</green>
+            <blue>215</blue>
+           </color>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Runtime Override</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>DBQL_Core</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Transcend_Prod</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Local Install</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Collection</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Organization</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>App Global</string>
+          </property>
+         </column>
+         <item row="0" column="0">
+          <property name="text">
+           <string>16.20</string>
+          </property>
+          <property name="background">
+           <brush brushstyle="NoBrush">
+            <color alpha="255">
+             <red>212</red>
+             <green>212</green>
+             <blue>212</blue>
+            </color>
+           </brush>
+          </property>
+         </item>
+         <item row="0" column="1">
+          <property name="text">
+           <string>&lt;none&gt;</string>
+          </property>
+         </item>
+         <item row="0" column="2">
+          <property name="text">
+           <string>&lt;none&gt;</string>
+          </property>
+         </item>
+         <item row="0" column="3">
+          <property name="text">
+           <string>16.20</string>
+          </property>
+         </item>
+         <item row="0" column="4">
+          <property name="text">
+           <string>17.05</string>
+          </property>
+         </item>
+         <item row="0" column="5">
+          <property name="text">
+           <string>&lt;none&gt;</string>
+          </property>
+         </item>
+         <item row="0" column="6">
+          <property name="text">
+           <string>17.05</string>
+          </property>
+         </item>
+         <item row="0" column="7">
+          <property name="text">
+           <string>&lt;none&gt;</string>
+          </property>
+         </item>
+         <item row="1" column="0">
+          <property name="text">
+           <string>stevietech123</string>
+          </property>
+         </item>
+         <item row="1" column="1">
+          <property name="text">
+           <string>&lt;none&gt;</string>
+          </property>
+         </item>
+         <item row="1" column="2">
+          <property name="text">
+           <string>&lt;none&gt;</string>
+          </property>
+         </item>
+         <item row="1" column="3">
+          <property name="text">
+           <string>stevietech</string>
+          </property>
+         </item>
+         <item row="1" column="4">
+          <property name="text">
+           <string>&lt;none&gt;</string>
+          </property>
+         </item>
+         <item row="1" column="5">
+          <property name="text">
+           <string>&lt;none&gt;</string>
+          </property>
+         </item>
+         <item row="1" column="6">
+          <property name="text">
+           <string>&lt;none&gt;</string>
+          </property>
+         </item>
+         <item row="1" column="7">
+          <property name="text">
+           <string>&lt;none&gt;</string>
+          </property>
+         </item>
+         <item row="2" column="0">
+          <property name="text">
+           <string>True</string>
+          </property>
+         </item>
+         <item row="2" column="1">
+          <property name="text">
+           <string>True</string>
+          </property>
+         </item>
+         <item row="2" column="2">
+          <property name="text">
+           <string>&lt;none&gt;</string>
+          </property>
+         </item>
+         <item row="2" column="3">
+          <property name="text">
+           <string>True</string>
+          </property>
+         </item>
+         <item row="2" column="4">
+          <property name="text">
+           <string>&lt;none&gt;</string>
+          </property>
+         </item>
+         <item row="2" column="5">
+          <property name="text">
+           <string>&lt;none&gt;</string>
+          </property>
+         </item>
+         <item row="2" column="6">
+          <property name="text">
+           <string>&lt;none&gt;</string>
+          </property>
+         </item>
+         <item row="2" column="7">
+          <property name="text">
+           <string>&lt;none&gt;</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="sjResources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

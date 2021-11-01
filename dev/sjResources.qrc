@@ -1,0 +1,28 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>icons/reload.png</file>
+    <file>icons/information-outline.png</file>
+    <file>icons/calendar-month.png</file>
+    <file>icons/circle-slice-0.png</file>
+    <file>icons/circle-slice-1.png</file>
+    <file>icons/circle-slice-2.png</file>
+    <file>icons/genie-close.png</file>
+    <file>icons/genie-simple.png</file>
+    <file>icons/circle-slice-3.png</file>
+    <file>icons/circle-slice-4.png</file>
+    <file>icons/circle-slice-5.png</file>
+    <file>icons/circle-slice-6.png</file>
+    <file>icons/circle-slice-7.png</file>
+    <file>icons/circle-slice-8.png</file>
+    <file>icons/teradata.png</file>
+    <file>icons/cloud-question.png</file>
+    <file>icons/help.png</file>
+    <file>icons/delete-outline.png</file>
+    <file>icons/minus.png</file>
+    <file>icons/plus.png</file>
+    <file>icons/database-plus-outline.png</file>
+    <file>icons/database-remove-outline.png</file>
+    <file>icons/database.png</file>
+    <file>icons/oil-lamp.png</file>
+  </qresource>
+</RCC>
