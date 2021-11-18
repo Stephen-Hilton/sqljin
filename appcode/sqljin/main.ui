@@ -1,0 +1,1478 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1017</width>
+    <height>732</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_5">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>SQLJin Collateral Automation</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QToolButton" name="btnMainShow">
+        <property name="toolTip">
+         <string>Show All Toolbars</string>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normalon>:/icons/icons/eye-outline.png</normalon>
+         </iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="btnMainHelp">
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normalon>:/icons/icons/help.png</normalon>
+         </iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="btnMainInfo">
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normalon>:/icons/icons/information-outline.png</normalon>
+         </iconset>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <item>
+       <widget class="QTabWidget" name="tabWidget">
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tabBuild">
+         <attribute name="title">
+          <string>Run</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_10">
+          <item>
+           <widget class="QSplitter" name="splitter_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <widget class="QSplitter" name="splitter">
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <widget class="QWidget" name="layoutWidget">
+              <layout class="QVBoxLayout" name="verticalLayout_8">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_4">
+                 <item>
+                  <widget class="QLabel" name="label_3">
+                   <property name="font">
+                    <font>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Collections</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="btnCollExpand">
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normalon>:/icons/icons/arrow-expand-all.png</normalon>
+                    </iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="btnCollCollapse">
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="sjResources.qrc">
+                     <normaloff>:/icons/icons/arrow-collapse-all.png</normaloff>:/icons/icons/arrow-collapse-all.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="Line" name="line_3">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="btnCollAdd">
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normalon>:/icons/icons/plus.png</normalon>
+                    </iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="btnCollRemove">
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normalon>:/icons/icons/minus.png</normalon>
+                    </iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QTreeWidget" name="treeCollections_2">
+                 <attribute name="headerVisible">
+                  <bool>false</bool>
+                 </attribute>
+                 <column>
+                  <property name="text">
+                   <string>Collection</string>
+                  </property>
+                 </column>
+                 <item>
+                  <property name="text">
+                   <string>Global - Demos</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="sjResources.qrc">
+                    <normaloff>:/icons/icons/genie-simple.png</normaloff>:/icons/icons/genie-simple.png</iconset>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>demo1</string>
+                   </property>
+                   <property name="checkState">
+                    <enum>Unchecked</enum>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>demo2</string>
+                   </property>
+                   <property name="checkState">
+                    <enum>Unchecked</enum>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>demo3</string>
+                   </property>
+                   <property name="checkState">
+                    <enum>Unchecked</enum>
+                   </property>
+                  </item>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Teradata - Metrics</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="sjResources.qrc">
+                    <normaloff>:/icons/icons/teradata.png</normaloff>:/icons/icons/teradata.png</iconset>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>DBQL Core</string>
+                   </property>
+                   <property name="checkState">
+                    <enum>Unchecked</enum>
+                   </property>
+                  </item>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Teradata - Solutions</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="sjResources.qrc">
+                    <normaloff>:/icons/icons/teradata.png</normaloff>:/icons/icons/teradata.png</iconset>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>Vantage Health Check</string>
+                   </property>
+                   <property name="checkState">
+                    <enum>Unchecked</enum>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Consulting Autotune</string>
+                   </property>
+                   <property name="checkState">
+                    <enum>Unchecked</enum>
+                   </property>
+                  </item>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Teradata - Competitve Solutions</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="sjResources.qrc">
+                    <normaloff>:/icons/icons/teradata.png</normaloff>:/icons/icons/teradata.png</iconset>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>BigQuery</string>
+                   </property>
+                   <property name="checkState">
+                    <enum>Unchecked</enum>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Snowflake</string>
+                   </property>
+                   <property name="checkState">
+                    <enum>Unchecked</enum>
+                   </property>
+                  </item>
+                 </item>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="layoutWidget">
+              <layout class="QVBoxLayout" name="verticalLayout_7">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_3">
+                 <item>
+                  <widget class="QLabel" name="label_4">
+                   <property name="font">
+                    <font>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Configured Systems&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;These are systems on which to run Collection&amp;gt;Processes.  To run, check one or more Jobs, one or more Systems, and click &amp;quot;Run&amp;quot;. &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;To add a new System, click on the + button to the right.  To remove a system, check the system in question and click the - button to the right.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;For more details, please see the &lt;/span&gt;&lt;a href=&quot;www.google.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;documentation on Systems&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="toolTipDuration">
+                    <number>-1</number>
+                   </property>
+                   <property name="text">
+                    <string>Systems</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="btnSysAdd">
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normalon>:/icons/icons/plus.png</normalon>
+                    </iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="btnSysRemove">
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normalon>:/icons/icons/minus.png</normalon>
+                    </iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QListWidget" name="lstSystems_2">
+                 <item>
+                  <property name="text">
+                   <string>System</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Unchecked</enum>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="sjResources.qrc">
+                    <normaloff>:/icons/icons/database.png</normaloff>:/icons/icons/database.png</iconset>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>SQLite</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Unchecked</enum>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="sjResources.qrc">
+                    <normaloff>:/icons/icons/database.png</normaloff>:/icons/icons/database.png</iconset>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Transcend Production</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Unchecked</enum>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="sjResources.qrc">
+                    <normaloff>:/icons/icons/database.png</normaloff>:/icons/icons/database.png</iconset>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Customer System ABC</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Unchecked</enum>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="sjResources.qrc">
+                    <normaloff>:/icons/icons/database.png</normaloff>:/icons/icons/database.png</iconset>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+            <widget class="QWidget" name="layoutWidget">
+             <layout class="QVBoxLayout" name="verticalLayout_9">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <item>
+                 <widget class="QPushButton" name="btnRunNow">
+                  <property name="text">
+                   <string>Run Now!</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QProgressBar" name="progressBar">
+                  <property name="value">
+                   <number>24</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnGenScripts">
+                  <property name="text">
+                   <string>Generate Run Scripts (to History)</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="Line" name="line_2">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="layoutHistory">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_6">
+                  <item>
+                   <widget class="QLabel" name="label_5">
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Run History</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_2">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <widget class="QComboBox" name="cboHistActions">
+                    <property name="minimumSize">
+                     <size>
+                      <width>250</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>Run From Last CheckPoint</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Run From The Beginning</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Process Returned .TSV</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Regenerate Charts and PPTx</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Search Past Runs</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Generate BTEQ File</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Generate Jupyter Notebook</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Generate Raw SQL File</string>
+                     </property>
+                    </item>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="btnHistActions">
+                    <property name="maximumSize">
+                     <size>
+                      <width>50</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Go!</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="QTableWidget" name="tblHistory">
+                  <property name="editTriggers">
+                   <set>QAbstractItemView::NoEditTriggers</set>
+                  </property>
+                  <property name="selectionMode">
+                   <enum>QAbstractItemView::SingleSelection</enum>
+                  </property>
+                  <property name="selectionBehavior">
+                   <enum>QAbstractItemView::SelectRows</enum>
+                  </property>
+                  <row>
+                   <property name="text">
+                    <string>1</string>
+                   </property>
+                  </row>
+                  <row>
+                   <property name="text">
+                    <string>2</string>
+                   </property>
+                  </row>
+                  <row>
+                   <property name="text">
+                    <string>3</string>
+                   </property>
+                  </row>
+                  <column>
+                   <property name="text">
+                    <string>icon</string>
+                   </property>
+                   <property name="foreground">
+                    <brush brushstyle="NoBrush">
+                     <color alpha="255">
+                      <red>0</red>
+                      <green>0</green>
+                      <blue>0</blue>
+                     </color>
+                    </brush>
+                   </property>
+                  </column>
+                  <column>
+                   <property name="text">
+                    <string>Gen Date</string>
+                   </property>
+                  </column>
+                  <column>
+                   <property name="text">
+                    <string>Processes</string>
+                   </property>
+                  </column>
+                  <column>
+                   <property name="text">
+                    <string>Systems</string>
+                   </property>
+                  </column>
+                  <column>
+                   <property name="text">
+                    <string>Run Type</string>
+                   </property>
+                  </column>
+                  <column>
+                   <property name="text">
+                    <string>Status</string>
+                   </property>
+                  </column>
+                  <item row="0" column="0">
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="sjResources.qrc">
+                     <normaloff>:/icons/icons/circle-slice-4.png</normaloff>:/icons/icons/circle-slice-4.png</iconset>
+                   </property>
+                  </item>
+                  <item row="0" column="1">
+                   <property name="text">
+                    <string>2021-11-10</string>
+                   </property>
+                  </item>
+                  <item row="0" column="2">
+                   <property name="text">
+                    <string>BigQuery</string>
+                   </property>
+                  </item>
+                  <item row="0" column="3">
+                   <property name="text">
+                    <string>Teradata</string>
+                   </property>
+                  </item>
+                  <item row="0" column="4">
+                   <property name="text">
+                    <string>Direct Connect</string>
+                   </property>
+                  </item>
+                  <item row="0" column="5">
+                   <property name="text">
+                    <string>Task 23/99, Awaiting Restart</string>
+                   </property>
+                  </item>
+                  <item row="1" column="0">
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="sjResources.qrc">
+                     <normaloff>:/icons/icons/circle-slice-8.png</normaloff>:/icons/icons/circle-slice-8.png</iconset>
+                   </property>
+                  </item>
+                  <item row="1" column="1">
+                   <property name="text">
+                    <string>2021-11-12</string>
+                   </property>
+                  </item>
+                  <item row="1" column="2">
+                   <property name="text">
+                    <string>VHC</string>
+                   </property>
+                  </item>
+                  <item row="1" column="3">
+                   <property name="text">
+                    <string>Teradata</string>
+                   </property>
+                  </item>
+                  <item row="1" column="4">
+                   <property name="text">
+                    <string>Direct Connect</string>
+                   </property>
+                  </item>
+                  <item row="1" column="5">
+                   <property name="text">
+                    <string>Done!</string>
+                   </property>
+                  </item>
+                  <item row="2" column="0">
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="sjResources.qrc">
+                     <normaloff>:/icons/icons/circle-slice-0.png</normaloff>:/icons/icons/circle-slice-0.png</iconset>
+                   </property>
+                  </item>
+                  <item row="2" column="1">
+                   <property name="text">
+                    <string>2021-11-15</string>
+                   </property>
+                  </item>
+                  <item row="2" column="2">
+                   <property name="text">
+                    <string>DBQL_Core</string>
+                   </property>
+                  </item>
+                  <item row="2" column="3">
+                   <property name="text">
+                    <string>Transcend Prod</string>
+                   </property>
+                  </item>
+                  <item row="2" column="4">
+                   <property name="text">
+                    <string>BTEQ Assisted</string>
+                   </property>
+                  </item>
+                  <item row="2" column="5">
+                   <property name="text">
+                    <string>Generated, Awaiting Data Return</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tabRun">
+         <attribute name="title">
+          <string>Build</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_13">
+          <item>
+           <widget class="QPlainTextEdit" name="txtBuildMain"/>
+          </item>
+          <item>
+           <widget class="QSplitter" name="splitter_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <widget class="QWidget" name="horizontalLayoutWidget_2">
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_12">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,2">
+                  <item>
+                   <widget class="QLabel" name="label_2">
+                    <property name="text">
+                     <string>Process Name:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLineEdit" name="txtBuildName"/>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_7">
+                  <item>
+                   <widget class="QPushButton" name="btnSave">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Save to Collection:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QComboBox" name="cboBuildCollection"/>
+                  </item>
+                  <item>
+                   <widget class="QToolButton" name="btnOpenCollFolder">
+                    <property name="text">
+                     <string>...</string>
+                    </property>
+                    <property name="icon">
+                     <iconset>
+                      <normalon>:/icons/icons/folder-outline.png</normalon>
+                     </iconset>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="Line" name="line">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="layoutWidget">
+             <layout class="QVBoxLayout" name="verticalLayout_11">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_8">
+                <item>
+                 <widget class="QToolButton" name="btnBuildRun">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>1</horstretch>
+                    <verstretch>1</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>75</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normalon>:/icons/icons/arrow-right-drop-circle.png</normalon>
+                   </iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_6">
+                  <property name="text">
+                   <string>On System:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_6">
+                <item>
+                 <widget class="QComboBox" name="cboSystems"/>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab">
+         <attribute name="title">
+          <string>About</string>
+         </attribute>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QDockWidget" name="dockSteps">
+   <property name="windowTitle">
+    <string>Steps</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_7">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>10</height>
+        </size>
+       </property>
+       <property name="baseSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>7</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string> Collection: CollName</string>
+       </property>
+       <property name="margin">
+        <number>-2</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_8">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>10</height>
+        </size>
+       </property>
+       <property name="baseSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>7</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string> System: SysName</string>
+       </property>
+       <property name="margin">
+        <number>-2</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTableWidget" name="tblSteps">
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SingleSelection</enum>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+       <property name="sortingEnabled">
+        <bool>true</bool>
+       </property>
+       <row>
+        <property name="text">
+         <string>1</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>2</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>3</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>4</string>
+        </property>
+       </row>
+       <column>
+        <property name="text">
+         <string>◯</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Type</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Name</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Log Msg</string>
+        </property>
+       </column>
+       <item row="0" column="0">
+        <property name="text">
+         <string>●</string>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="foreground">
+         <brush brushstyle="NoBrush">
+          <color alpha="255">
+           <red>0</red>
+           <green>170</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </property>
+       </item>
+       <item row="1" column="0">
+        <property name="text">
+         <string>●</string>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="foreground">
+         <brush brushstyle="NoBrush">
+          <color alpha="255">
+           <red>0</red>
+           <green>170</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </property>
+       </item>
+       <item row="2" column="0">
+        <property name="text">
+         <string>◔</string>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="background">
+         <brush brushstyle="NoBrush">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </property>
+       </item>
+       <item row="3" column="0">
+        <property name="text">
+         <string>○</string>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+       </item>
+       <item row="3" column="1">
+        <property name="text">
+         <string/>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockVariable">
+   <property name="windowTitle">
+    <string>Variables</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QTreeWidget" name="tvwVariables">
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
+       <property name="sortingEnabled">
+        <bool>true</bool>
+       </property>
+       <property name="animated">
+        <bool>false</bool>
+       </property>
+       <column>
+        <property name="text">
+         <string>Name</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Value</string>
+        </property>
+       </column>
+       <item>
+        <property name="text">
+         <string>tdver</string>
+        </property>
+        <property name="text">
+         <string>17.05</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>Your Install</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>SystemName</string>
+         </property>
+         <property name="text">
+          <string>17.05</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Override</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>OrgName *</string>
+         </property>
+         <property name="text">
+          <string>17.05</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>JobName</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Global</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>CollectionName</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>StartDate</string>
+        </property>
+        <property name="text">
+         <string>'2021-11-01'</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>Your Install</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>SystemName</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Override</string>
+         </property>
+         <property name="text">
+          <string>'2021-11-01'</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>OrgName</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>JobName</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Global</string>
+         </property>
+         <property name="text">
+          <string>'2021-11-01'</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>CollectionName</string>
+         </property>
+         <property name="text">
+          <string>DATE-31</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>siteid</string>
+        </property>
+        <property name="text">
+         <string>TDSite123</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>Your Install</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>SystemName</string>
+         </property>
+         <property name="text">
+          <string>TDSite123</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Override</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>OrgName</string>
+         </property>
+         <property name="text">
+          <string>enter your siteid here</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>JobName</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Global</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>CollectionName</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>pdcr</string>
+        </property>
+        <property name="text">
+         <string>True</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>EndDate</string>
+        </property>
+        <property name="text">
+         <string>DATE-1</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>Your Install</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>SystemName</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Override</string>
+         </property>
+         <property name="text">
+          <string>DATE-1</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>OrgName</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>JobName</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Global</string>
+         </property>
+         <property name="text">
+          <string>'2021-11-17'</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>CollectionName</string>
+         </property>
+         <property name="text">
+          <string>DATE-1</string>
+         </property>
+        </item>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockLogs">
+   <property name="minimumSize">
+    <size>
+     <width>89</width>
+     <height>111</height>
+    </size>
+   </property>
+   <property name="windowTitle">
+    <string>Logs</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QPlainTextEdit" name="txtLogs"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="sjResources.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>btnMainShow</sender>
+   <signal>clicked()</signal>
+   <receiver>dockLogs</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>948</x>
+     <y>30</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>578</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnMainShow</sender>
+   <signal>clicked()</signal>
+   <receiver>dockSteps</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>948</x>
+     <y>30</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>83</x>
+     <y>134</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnMainShow</sender>
+   <signal>clicked()</signal>
+   <receiver>dockVariable</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>948</x>
+     <y>30</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>83</x>
+     <y>395</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnCollExpand</sender>
+   <signal>clicked()</signal>
+   <receiver>treeCollections_2</receiver>
+   <slot>expandAll()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>508</x>
+     <y>81</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>495</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnCollCollapse</sender>
+   <signal>clicked()</signal>
+   <receiver>treeCollections_2</receiver>
+   <slot>collapseAll()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>530</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>523</x>
+     <y>169</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

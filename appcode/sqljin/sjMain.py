@@ -127,3 +127,7 @@ if __name__ == '__main__':
     broadcast('poopypants')
     broadcast('malformed.org.location', 'Deloitte')
 
+
+    import updater
+    uiUpdater = updater.Ui_sjLoader()
+    uiUpdater.setupUi()

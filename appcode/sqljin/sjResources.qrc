@@ -1,5 +1,14 @@
 <RCC>
   <qresource prefix="icons">
+    <file>icons/eye-outline.png</file>
+    <file>icons/arrow-collapse-all.png</file>
+    <file>icons/arrow-expand-all.png</file>
+    <file>icons/folder-outline.png</file>
+    <file>icons/folder.png</file>
+    <file>icons/folder-eye.png</file>
+    <file>icons/folder-open-outline.png</file>
+    <file>icons/arrow-right-drop-circle.png</file>
+    <file>icons/pause-circle.png</file>
     <file>icons/reload.png</file>
     <file>icons/information-outline.png</file>
     <file>icons/calendar-month.png</file>
