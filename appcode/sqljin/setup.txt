@@ -3,3 +3,23 @@ python -m pip install pyqt6-tools
 
 C:\git\sqljin\dev\devui_env\Lib\site-packages\qt6_applications\Qt\bin\designer.exe
 
+settings.sync github key:
+vscode://vscode.github-authentication/did-authenticate?windowid=1&code=4b889ac94deb29f69b82&state=11127b09-d541-4824-b7ea-ab3f99d55749
+
+
+# BUILD EVENT FRAMEWORK
+# event convension:  action.type.name  or  action.type.parent.name
+# request is current tense, notifications are past tense
+#    some examples:
+#           update.system.teradata
+#           updated.system.teradata
+#           load.collection.teradata.metrics
+#           loaded.collection.teradata.solutions
+#           get.db.global.variables
+#           got.db.global.variables
+#           updated.system.teradata.variables
+#           getlistof.organizations
+#           update.application.global
+#           update.content.global
+#           update.content.local 
+#           update.content.organizations
