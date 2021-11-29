@@ -1,7 +1,8 @@
 python -m pip install pyqt6
 python -m pip install pyqt6-tools
+python -m pip install pyyaml
 
-C:\git\sqljin\dev\devui_env\Lib\site-packages\qt6_applications\Qt\bin\designer.exe
+C:\git\sqljin\appcode\env\Lib\site-packages\qt6_applications\Qt\bin\designer.exe
 
 settings.sync github key:
 vscode://vscode.github-authentication/did-authenticate?windowid=1&code=4b889ac94deb29f69b82&state=11127b09-d541-4824-b7ea-ab3f99d55749

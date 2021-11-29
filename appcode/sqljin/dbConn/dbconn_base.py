@@ -42,7 +42,7 @@ class dbConn_Base():
         self.password   = 'not set' if password   == '' else password    
         self.logmech    = 'not set' if logmech    == '' else logmech     
         self.encrypt = encrypt
-        self.classname = str(self.__class__).split('.')[1][:-2] 
+        self.classname = str(self.__class__)
         self.connection = None
 
         self.log.debug('instantiated class: %s  for use by system: %s' %(self.classname, self.systemname))
@@ -69,11 +69,11 @@ class dbConn_Base():
     # ----------------------------------------------
     def connect(self, host='', username='', password='', logmech='') -> bool:
         # make sure class has up-to-date information
-        self.host       = 'not set' if host       == '' else host        
-        self.username   = 'not set' if username   == '' else username    
-        self.password   = 'not set' if password   == '' else password    
-        self.logmech    = 'not set' if logmech    == '' else logmech  
-        self.connection   = None 
+        if host     != '': self.host     = host        
+        if username != '': self.username = username    
+        if password != '': self.password = password    
+        if logmech  != '': self.logmech  = logmech  
+        self.connection = None 
 
         # connect to the system in question:
         self.log.info(f'attempting connection to {self.systemname} ({self.classname})...')

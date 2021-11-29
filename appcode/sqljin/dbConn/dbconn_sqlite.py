@@ -5,13 +5,18 @@
 # ######################################################
 import logging
 import sqlite3
-import dbconn_base
+from . import dbconn_base
 import pandas as pd
+from pathlib import Path 
 
 class dbConn_SQLite(dbconn_base.dbConn_Base):
 
     def _connect_(self) -> bool:
+        self.connection = None
         try:
+            if not Path(self.host).exists(): 
+                self.log.warning(f'MISSING sqlite host file: {self.host}')
+                self.log.warning(f'  creating new host file: {self.host}')
             self.connection = sqlite3.connect(self.host)
             self.cursor = self.connection.cursor
             return True
@@ -31,6 +36,9 @@ class dbConn_SQLite(dbconn_base.dbConn_Base):
         try:
             df = pd.read_sql_query(sql, self.connection)
             return (len(df.index), df)
+        except TypeError as e:
+            cur = self.connection.execute(sql)
+            return (cur.rowcount, None)
         except Exception as e:
             self.log.error('error during execution: %s' %str(e))
             return None

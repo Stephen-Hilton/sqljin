@@ -1,0 +1,37 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>eye-outline.png</file>
+    <file>arrow-collapse-all.png</file>
+    <file>arrow-expand-all.png</file>
+    <file>folder-outline.png</file>
+    <file>folder.png</file>
+    <file>folder-eye.png</file>
+    <file>folder-open-outline.png</file>
+    <file>arrow-right-drop-circle.png</file>
+    <file>pause-circle.png</file>
+    <file>reload.png</file>
+    <file>information-outline.png</file>
+    <file>calendar-month.png</file>
+    <file>circle-slice-0.png</file>
+    <file>circle-slice-1.png</file>
+    <file>circle-slice-2.png</file>
+    <file>genie-close.png</file>
+    <file>genie-simple.png</file>
+    <file>circle-slice-3.png</file>
+    <file>circle-slice-4.png</file>
+    <file>circle-slice-5.png</file>
+    <file>circle-slice-6.png</file>
+    <file>circle-slice-7.png</file>
+    <file>circle-slice-8.png</file>
+    <file>teradata.png</file>
+    <file>cloud-question.png</file>
+    <file>help.png</file>
+    <file>delete-outline.png</file>
+    <file>minus.png</file>
+    <file>plus.png</file>
+    <file>database-plus-outline.png</file>
+    <file>database-remove-outline.png</file>
+    <file>database.png</file>
+    <file>oil-lamp.png</file>
+  </qresource>
+</RCC>

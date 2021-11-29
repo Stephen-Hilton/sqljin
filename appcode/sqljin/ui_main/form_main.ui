@@ -54,7 +54,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normalon>:/icons/icons/eye-outline.png</normalon>
+          <normalon>:/icons/eye-outline.png</normalon>
          </iconset>
         </property>
        </widget>
@@ -66,7 +66,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normalon>:/icons/icons/help.png</normalon>
+          <normalon>:/icons/help.png</normalon>
          </iconset>
         </property>
        </widget>
@@ -78,7 +78,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normalon>:/icons/icons/information-outline.png</normalon>
+          <normalon>:/icons/information-outline.png</normalon>
          </iconset>
         </property>
        </widget>
@@ -133,7 +133,7 @@
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normalon>:/icons/icons/arrow-expand-all.png</normalon>
+                     <normalon>:/icons/arrow-expand-all.png</normalon>
                     </iconset>
                    </property>
                   </widget>
@@ -144,8 +144,8 @@
                     <string>...</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="sjResources.qrc">
-                     <normaloff>:/icons/icons/arrow-collapse-all.png</normaloff>:/icons/icons/arrow-collapse-all.png</iconset>
+                    <iconset resource="../icons/!Resources.qrc">
+                     <normaloff>:/icons/arrow-collapse-all.png</normaloff>:/icons/arrow-collapse-all.png</iconset>
                    </property>
                   </widget>
                  </item>
@@ -163,7 +163,7 @@
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normalon>:/icons/icons/plus.png</normalon>
+                     <normalon>:/icons/plus.png</normalon>
                     </iconset>
                    </property>
                   </widget>
@@ -175,7 +175,7 @@
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normalon>:/icons/icons/minus.png</normalon>
+                     <normalon>:/icons/minus.png</normalon>
                     </iconset>
                    </property>
                   </widget>
@@ -203,7 +203,7 @@
                    </font>
                   </property>
                   <property name="icon">
-                   <iconset resource="sjResources.qrc">
+                   <iconset>
                     <normaloff>:/icons/icons/genie-simple.png</normaloff>:/icons/icons/genie-simple.png</iconset>
                   </property>
                   <item>
@@ -242,7 +242,7 @@
                    </font>
                   </property>
                   <property name="icon">
-                   <iconset resource="sjResources.qrc">
+                   <iconset>
                     <normaloff>:/icons/icons/teradata.png</normaloff>:/icons/icons/teradata.png</iconset>
                   </property>
                   <item>
@@ -265,7 +265,7 @@
                    </font>
                   </property>
                   <property name="icon">
-                   <iconset resource="sjResources.qrc">
+                   <iconset>
                     <normaloff>:/icons/icons/teradata.png</normaloff>:/icons/icons/teradata.png</iconset>
                   </property>
                   <item>
@@ -296,7 +296,7 @@
                    </font>
                   </property>
                   <property name="icon">
-                   <iconset resource="sjResources.qrc">
+                   <iconset>
                     <normaloff>:/icons/icons/teradata.png</normaloff>:/icons/icons/teradata.png</iconset>
                   </property>
                   <item>
@@ -350,7 +350,7 @@
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normalon>:/icons/icons/plus.png</normalon>
+                     <normalon>:/icons/plus.png</normalon>
                     </iconset>
                    </property>
                   </widget>
@@ -362,7 +362,7 @@
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normalon>:/icons/icons/minus.png</normalon>
+                     <normalon>:/icons/minus.png</normalon>
                     </iconset>
                    </property>
                   </widget>
@@ -379,7 +379,7 @@
                    <enum>Unchecked</enum>
                   </property>
                   <property name="icon">
-                   <iconset resource="sjResources.qrc">
+                   <iconset>
                     <normaloff>:/icons/icons/database.png</normaloff>:/icons/icons/database.png</iconset>
                   </property>
                  </item>
@@ -391,7 +391,7 @@
                    <enum>Unchecked</enum>
                   </property>
                   <property name="icon">
-                   <iconset resource="sjResources.qrc">
+                   <iconset>
                     <normaloff>:/icons/icons/database.png</normaloff>:/icons/icons/database.png</iconset>
                   </property>
                  </item>
@@ -403,7 +403,7 @@
                    <enum>Unchecked</enum>
                   </property>
                   <property name="icon">
-                   <iconset resource="sjResources.qrc">
+                   <iconset>
                     <normaloff>:/icons/icons/database.png</normaloff>:/icons/icons/database.png</iconset>
                   </property>
                  </item>
@@ -415,7 +415,7 @@
                    <enum>Unchecked</enum>
                   </property>
                   <property name="icon">
-                   <iconset resource="sjResources.qrc">
+                   <iconset>
                     <normaloff>:/icons/icons/database.png</normaloff>:/icons/icons/database.png</iconset>
                   </property>
                  </item>
@@ -624,7 +624,7 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="sjResources.qrc">
+                    <iconset>
                      <normaloff>:/icons/icons/circle-slice-4.png</normaloff>:/icons/icons/circle-slice-4.png</iconset>
                    </property>
                   </item>
@@ -658,7 +658,7 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="sjResources.qrc">
+                    <iconset>
                      <normaloff>:/icons/icons/circle-slice-8.png</normaloff>:/icons/icons/circle-slice-8.png</iconset>
                    </property>
                   </item>
@@ -692,7 +692,7 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="sjResources.qrc">
+                    <iconset>
                      <normaloff>:/icons/icons/circle-slice-0.png</normaloff>:/icons/icons/circle-slice-0.png</iconset>
                    </property>
                   </item>
@@ -787,7 +787,7 @@
                     </property>
                     <property name="icon">
                      <iconset>
-                      <normalon>:/icons/icons/folder-outline.png</normalon>
+                      <normalon>:/icons/folder-outline.png</normalon>
                      </iconset>
                     </property>
                    </widget>
@@ -828,7 +828,7 @@
                   </property>
                   <property name="icon">
                    <iconset>
-                    <normalon>:/icons/icons/arrow-right-drop-circle.png</normalon>
+                    <normalon>:/icons/arrow-right-drop-circle.png</normalon>
                    </iconset>
                   </property>
                   <property name="iconSize">
@@ -1084,7 +1084,7 @@
         <enum>Qt::CustomContextMenu</enum>
        </property>
        <property name="sortingEnabled">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="animated">
         <bool>false</bool>
@@ -1108,58 +1108,79 @@
         </property>
         <item>
          <property name="text">
-          <string>Your Install</string>
+          <string>0 - Override</string>
          </property>
          <property name="text">
           <string>-</string>
          </property>
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+         </property>
         </item>
         <item>
          <property name="text">
-          <string>SystemName</string>
+          <string>1 - JobName</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>2 - SystemName</string>
          </property>
          <property name="text">
           <string>17.05</string>
          </property>
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+         </property>
         </item>
         <item>
          <property name="text">
-          <string>Override</string>
+          <string>3 - CollectionName</string>
          </property>
          <property name="text">
           <string>-</string>
          </property>
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+         </property>
         </item>
         <item>
          <property name="text">
-          <string>OrgName *</string>
+          <string>4 - Your Install</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>5 - OrgName *</string>
          </property>
          <property name="text">
           <string>17.05</string>
          </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>JobName</string>
-         </property>
-         <property name="text">
-          <string>-</string>
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>Global</string>
+          <string>6 - Global*</string>
          </property>
          <property name="text">
           <string>-</string>
          </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>CollectionName</string>
-         </property>
-         <property name="text">
-          <string>-</string>
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
          </property>
         </item>
        </item>
@@ -1391,7 +1412,7 @@
   </widget>
  </widget>
  <resources>
-  <include location="sjResources.qrc"/>
+  <include location="../icons/!Resources.qrc"/>
  </resources>
  <connections>
   <connection>
