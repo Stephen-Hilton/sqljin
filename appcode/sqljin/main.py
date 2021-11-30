@@ -11,7 +11,7 @@ log.header(f'WELCOME TO {paths.appname.upper()}!')
 
 # setup event framework:
 event = util.sj_event.sj_Event(log)
-log.debug('event framework starting...')
+log.info('event framework starting...')
 event.setup_logging_events()
 broadcast = event.broadcast
 add_handler = event.add_handler
@@ -19,20 +19,18 @@ log.debug('testing event framework...')
 broadcast('test', 'event framework working')
 
 
-if Path(paths.localPath / 'config.db').exists():
+if Path(paths.localPath / 'config.db').exists(): 
     os.remove( Path(paths.localPath / 'config.db') )  # just for testing...
 
+
 # load local config.db from sqlite
-config_local = util.sj_configdb.sj_Config(event, 'Local')
+config_local = util.sj_configdb.sj_Config(event, 'Local', 1)
 
 
 
 # choose which UI to start based on commandline arg:
 sys.argv.append('updater')
 uistart = 'updater' if 'updater' in sys.argv else 'main'
-
-
-
 
 
 log.header('Application Complete, Closing')

@@ -8,5 +8,13 @@
           "args": ["-ExecutionPolicy", "Bypass"]
         }
       },
-      "terminal.integrated.defaultProfile.windows": "PowerShell"
+      "terminal.integrated.defaultProfile.windows": "PowerShell",
+      "sqltools.connections": [
+        {
+          "previewLimit": 50,
+          "driver": "SQLite",
+          "name": "Local.config.db",
+          "database": "C:\\git\\sqljin\\configs\\Local\\config.db"
+        }
+      ]
 }

@@ -34,11 +34,16 @@ class dbConn_SQLite(dbconn_base.dbConn_Base):
 
     def _execute_(self, sql) -> tuple:
         try:
-            df = pd.read_sql_query(sql, self.connection)
-            return (len(df.index), df)
+            cur = self.connection.execute(sql)
+            rows = cur.fetchall()
+            df = None
+            if cur.description:
+                cols = [column[0] for column in cur.description]
+                df = pd.DataFrame.from_records(data = rows, columns = cols)
+            return (len(rows), df)
         except TypeError as e:
             cur = self.connection.execute(sql)
-            return (cur.rowcount, None)
+            return (len(rows), None)
         except Exception as e:
             self.log.error('error during execution: %s' %str(e))
             return None

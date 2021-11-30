@@ -25,7 +25,7 @@ class sj_Event():
         if not eventname in self.handlers:
             self.handlers[eventname] = []
         self.handlers[eventname].append(fn)
-        self.log.info('new event handler "%s" registered to listen for event "%s"' %(str(fn.__name__), eventname))
+        self.log.debug('new event handler "%s" registered to listen for event "%s"' %(str(fn.__name__), eventname))
 
     def broadcast(self, eventname:str, *args, **kwargs) -> list:            
         # confirm the event exists as a registered handler:

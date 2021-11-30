@@ -129,27 +129,31 @@ class dbConn_Base():
             rows = rtn[0]
             df = pd.DataFrame(rtn[1])
 
-            if   datareturned == 'none': return (rows, None)
-            elif datareturned in ['df','dataframe','data','pandas']:  rtn = df
-            elif datareturned == 'dict':  rtn = df.to_dict() 
-            elif datareturned == 'json':  rtn = df.to_json()
-            elif datareturned in ['str','string','cli']:   rtn = df.to_string()
-            elif datareturned == 'csv':   rtn = df.to_csv(na_rep = '', index = False)  
-            elif datareturned == 'html':  rtn = df.to_html()
-            elif datareturned == 'pickle': rtn = df.to_pickle(savepath)
-            elif datareturned == 'list':  
-                rtn = df.to_dict() 
-                rtn2 = []
-                for k in rtn.keys():
-                    rtn2.append([k, [x for x in rtn[k].values()]] )
-                rtn = rtn2 
-            else:
-                self.log.warning("""data return requested (%s) is not supported.
-                Currently supported types: [dataframe/df/data, dict, list, json, str/string/cli, csv, html, json]
-                For now, returning a dataframe, and you''ll like it.""" %datareturned)
-            if savepath and datareturned != 'pickle':
-                with open( Path(savepath).resolve(),'w') as fh:
-                    fh.write(str(rtn))
+            try:
+                if   datareturned == 'none': return (rows, None)
+                elif datareturned in ['df','dataframe','data','pandas']:  rtn = df
+                elif datareturned == 'dict':  rtn = df.to_dict() 
+                elif datareturned == 'json':  rtn = df.to_json()
+                elif datareturned in ['str','string','cli']:   rtn = df.to_string()
+                elif datareturned == 'csv':   rtn = df.to_csv(na_rep = '', index = False)  
+                elif datareturned == 'html':  rtn = df.to_html()
+                elif datareturned == 'pickle': rtn = df.to_pickle(savepath)
+                elif datareturned == 'list':  
+                    rtn = df.to_dict() 
+                    rtn2 = []
+                    for k in rtn.keys():
+                        rtn2.append([k, [x for x in rtn[k].values()]] )
+                    rtn = rtn2 
+                else:
+                    self.log.warning("""data return requested (%s) is not supported.
+                    Currently supported types: [dataframe/df/data, dict, list, json, str/string/cli, csv, html, json]
+                    For now, returning a dataframe, and you''ll like it.""" %datareturned)
+                if savepath and datareturned != 'pickle':
+                    with open( Path(savepath).resolve(),'w') as fh:
+                        fh.write(str(rtn))
+            except Exception as e:
+                self.log.exception(f"data returned doesn't match data return requested ({datareturned}):\n\t")
+
             return (rows, rtn)
             
 
