@@ -8,14 +8,15 @@ import sqlite3
 from pathlib import Path
 import sys 
 
-sys.path.append("..") # to allow imports of dbConn modules
-from dbConn.dbconn_sqlite import dbConn_SQLite as dbsqlite
+# from dbConn.dbconn_sqlite import dbConn_SQLite as dbsqlite
+# from configs.Global.plugins.dbConn.dbconn_sqlite import dbConn_SQLite as dbsqlite
 from .sj_event import sj_Event
 from .sj_logger import sj_Logger
 from .sj_paths import sj_Paths
 
+
 class sj_Config():
-    configdb: dbsqlite
+    configdb: object
     log: sj_Logger
     paths: sj_Paths
 
@@ -26,6 +27,8 @@ class sj_Config():
         self.configname = configname
         self.orgid = orgid
         self.configfilepath = Path(self.paths.configPath / configname / 'config.db')
+        from configs.Global.plugins.dbConn.dbconn_sqlite import dbConn_SQLite as dbsqlite
+
 
         # connect to config.db
         self.log.info(f'reading config: {configname} from path: {self.configfilepath}')

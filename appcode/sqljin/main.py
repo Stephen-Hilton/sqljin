@@ -8,6 +8,8 @@ import util
 paths = util.sj_paths.sj_Paths()
 log = util.sj_logger.sj_Logger(paths)
 log.header(f'WELCOME TO {paths.appname.upper()}!')
+log.info('application environment paths:\n\t' + '\n\t'.join( [str(x) for x in sys.path]))
+
 
 # setup event framework:
 event = util.sj_event.sj_Event(log)

@@ -1,3 +1,4 @@
+import sys 
 from pathlib import Path 
 from datetime import datetime 
 
@@ -26,6 +27,8 @@ class sj_Paths():
         self.globalPath = Path(self.configPath / 'Global')
         self.localPath = Path(self.configPath / 'Local')
         self.historyPath = Path(self.approotPath / 'history')
+        self.set_env_paths(self.configPath)
+        self.set_env_paths(self.approotPath)
 
     def find_approotPath(self) -> Path:
         refPath = Path(__file__).resolve()
@@ -35,3 +38,9 @@ class sj_Paths():
                 return Path(p.parent.resolve())
         # at this point, appcode directory never found
         #  TODO: error handling
+
+    def set_env_paths(self, path_to_add:Path ) -> list:
+        sys.path.append( str(path_to_add.resolve()).strip() )
+        return sys.path 
+
+
