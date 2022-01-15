@@ -1,38 +1,52 @@
 print(f'loaded {__name__}')
 
 import sys, os
-from pathlib import Path 
-import util
+from pathlib import Path
 
+import dbConn.dbconn_sqlite as dbConnSQLite
+
+import util.sj_event  as sjevent
+import util.sj_logger as sjlog
+import util.sj_paths  as sjpaths
+
+import objects.sj_datamgr  as sjdatamgr  
+import objects.sj_property as sjprop  
+import objects.sj_object   as sjobject  
+import objects.sj_orgs     as sjorg  
+
+
+## --------------------------------
+## Initial Utility Setup:
+## --------------------------------
 # setup logging and path class
-paths = util.sj_paths.sj_Paths()
-log = util.sj_logger.sj_Logger(paths)
+paths = sjpaths.sj_Paths()
+log = sjlog.sj_Logger(paths)
 log.header(f'WELCOME TO {paths.appname.upper()}!')
 log.info('application environment paths:\n\t' + '\n\t'.join( [str(x) for x in sys.path]))
 
-
 # setup event framework:
-event = util.sj_event.sj_Event(log)
-log.info('event framework starting...')
+event = sjevent.sj_Event(log)
 event.setup_logging_events()
 broadcast = event.broadcast
 add_handler = event.add_handler
 log.debug('testing event framework...')
 broadcast('test', 'event framework working')
 
-
-if Path(paths.localPath / 'config.db').exists(): 
-    os.remove( Path(paths.localPath / 'config.db') )  # just for testing...
-
-
-# load local config.db from sqlite
-config_local = util.sj_configdb.sj_Config(event, 'Local', 1)
+# bundle utilities for easier passing around
+utils = {'log':log, 'event':event, 'paths':paths}
 
 
+## --------------------------------
+## Initial Object Setup:
+## --------------------------------
+# create Organization Factory
+orgfactory = sjorg.sj_OrgFactory(utils)
+orgfactory.load_all_organizations_in_folder(paths.configPath.resolve())
 
-# choose which UI to start based on commandline arg:
-sys.argv.append('updater')
-uistart = 'updater' if 'updater' in sys.argv else 'main'
+orgfactory.new_organization('Zebra')
+
+
+
 
 
 log.header('Application Complete, Closing')

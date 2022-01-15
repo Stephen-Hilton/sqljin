@@ -1,6 +1,0 @@
-version: 0
-variables:
-  some1: value
-  some2: [123, 456, 789]
-  some3: 123
-  some4: true   

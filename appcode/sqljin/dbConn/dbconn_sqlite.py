@@ -5,11 +5,11 @@
 # ######################################################
 import logging
 import sqlite3
-from . import dbconn_base
+from dbConn.dbconn_base import dbConn_Base
 import pandas as pd
 from pathlib import Path 
 
-class dbConn_SQLite(dbconn_base.dbConn_Base):
+class dbConn_SQLite(dbConn_Base):
 
     def _connect_(self) -> bool:
         self.connection = None
@@ -19,6 +19,7 @@ class dbConn_SQLite(dbconn_base.dbConn_Base):
                 self.log.warning(f'  creating new host file: {self.host}')
             self.connection = sqlite3.connect(self.host)
             self.cursor = self.connection.cursor
+            self.connection.execute("PRAGMA foreign_keys = 1")
             return True
         except Exception as e:
             self.log.error('error during connection: %s' %str(e))
@@ -40,7 +41,7 @@ class dbConn_SQLite(dbconn_base.dbConn_Base):
             if cur.description:
                 cols = [column[0] for column in cur.description]
                 df = pd.DataFrame.from_records(data = rows, columns = cols)
-            return (len(rows), df)
+            return (df, len(rows))
         except TypeError as e:
             cur = self.connection.execute(sql)
             return (len(rows), None)

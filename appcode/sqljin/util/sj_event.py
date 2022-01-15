@@ -16,7 +16,7 @@ from .sj_logger import sj_Logger
 
 class sj_Event():
     handlers = {}
-    log: object
+    log: sj_Logger
 
     def __init__(self, log:sj_Logger) -> None:
         self.log = log
@@ -42,6 +42,7 @@ class sj_Event():
         return rtn
         
     def setup_logging_events(self):
+        self.log.debug('doing initial event handler population')
         # add logging events
         self.add_handler('print', print )
         self.add_handler('test', self.log.debug )

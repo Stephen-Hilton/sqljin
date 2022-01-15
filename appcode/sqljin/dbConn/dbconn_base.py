@@ -26,6 +26,7 @@ class dbConn_Base():
     host:str = ''
     logmech:str = ''
     encrypt:bool = False 
+    autocommit_default = None
 
     log:logging.Logger = None 
     classname:str = ''
@@ -94,6 +95,15 @@ class dbConn_Base():
         self.connection = None # actually, database connection object
         return True  # or False
 
+    def connected(self) ->bool:
+        self.log.info(f'testing connection to {self.systemname}')
+        rtn = self._connected_()
+        self.log.info( 'connected!' if rtn else 'not connected' )
+        return rtn
+
+    def _connected_(self) ->bool:
+        return False if self.execute('select 1','scalar') is None else True
+
     def disconnect(self) -> bool:
         self.log.info(f'disconnecting from {self.systemname} ({self.classname})...')
         rtn = self._disconnect_()
@@ -112,38 +122,51 @@ class dbConn_Base():
 
     # SQL EXECUTION LOGIC
     # ----------------------------------------------
-    def execute(self, sql='', datareturned='none', savepath:Path = None, autocommit=False) -> tuple:
-        """return tuple of (rows_affected/returned, dataframe/None)"""
-        if self.connection == None: self.connect()
-        self.log.info('attempting to execute sql:%s' %self.logformat_sql(sql))
+    def execute(self, sql='', datareturned='none', autocommit=None, savepath:Path = None, logsql=True) -> tuple:
+        """
+        Executes supplied SQL and returns tuple of (row count, return structure|None, list of column names|None)
+        If failure, returns None
+        """
+
+        # define autocommit setting 
+        if self.autocommit_default is not None and autocommit is None:
+            autocommit = self.autocommit_default
+        if autocommit is None: autocommit = False
+
+        # connect if not
+        if self.connection is None: self.connect()
+        if logsql: self.log.info('attempting to execute sql:%s' %self.logformat_sql(sql))
+        
+        # call core execute method (overriden)
         rtn = self._execute_(sql)
 
+        # determine success
         if rtn is None:
             self.log.error('execution failed')
-            return None
+            # behavior of failed SQL is handled further up the stack
+            return None 
         else:
-            self.log.info('execution complete (%i rows)' %rtn[0])
+            # build return object:
+            rows = rtn[1]
+            df = pd.DataFrame(rtn[0])
+            df.columns = [col.lower() for col in list(df.columns)]
+
+            if logsql: self.log.info('execution complete (%i rows)' %rows)
             if autocommit: self.commit()
 
-            # build return object:
-            rows = rtn[0]
-            df = pd.DataFrame(rtn[1])
 
             try:
-                if   datareturned == 'none': return (rows, None)
+                if   datareturned == 'none': rtn = None
                 elif datareturned in ['df','dataframe','data','pandas']:  rtn = df
-                elif datareturned == 'dict':  rtn = df.to_dict() 
+                elif datareturned in ['scalar','single','first']: rtn = df.iloc[0,0]
+                elif datareturned in ['dict', 'dictcol']:  rtn = df.to_dict() 
+                elif datareturned in ['dictrow','list']:  
+                    rtn = df.to_dict('records')
                 elif datareturned == 'json':  rtn = df.to_json()
                 elif datareturned in ['str','string','cli']:   rtn = df.to_string()
                 elif datareturned == 'csv':   rtn = df.to_csv(na_rep = '', index = False)  
                 elif datareturned == 'html':  rtn = df.to_html()
                 elif datareturned == 'pickle': rtn = df.to_pickle(savepath)
-                elif datareturned == 'list':  
-                    rtn = df.to_dict() 
-                    rtn2 = []
-                    for k in rtn.keys():
-                        rtn2.append([k, [x for x in rtn[k].values()]] )
-                    rtn = rtn2 
                 else:
                     self.log.warning("""data return requested (%s) is not supported.
                     Currently supported types: [dataframe/df/data, dict, list, json, str/string/cli, csv, html, json]
@@ -152,9 +175,10 @@ class dbConn_Base():
                     with open( Path(savepath).resolve(),'w') as fh:
                         fh.write(str(rtn))
             except Exception as e:
-                self.log.exception(f"data returned doesn't match data return requested ({datareturned}):\n\t")
+                self.log.exception(f"data returned doesn't match data return requested ({datareturned}), returning None")
+                rtn = None
 
-            return (rows, rtn)
+            return {"data":rtn, "rows":rows, "columns": list(df.columns)}
             
 
     def _execute_(self, sql) -> tuple:
@@ -163,11 +187,11 @@ class dbConn_Base():
         dfReturn = pd.DataFrame({'col_1': [3, 2, 1, 0], 'col_2': ['a', 'b', 'c', 'd']})
         return (rows, dfReturn)
 
-    def commit(self) -> bool:
-        self.log.debug(f'attempting to commit changes to {self.systemname} ({self.classname})...')
+    def commit(self, logsql=True) -> bool:
+        if logsql: self.log.debug(f'attempting to commit changes to {self.systemname} ({self.classname})...')
         rtn = self._commit_()
         if rtn:
-            self.log.info('changes committed')
+            if logsql: self.log.info('changes committed')
         else:
             self.log.error('error while committing changes')
         return rtn
