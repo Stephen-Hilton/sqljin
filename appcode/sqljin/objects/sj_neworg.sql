@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS   sjObjects
 
 CREATE VIEW IF NOT EXISTS   Objects  as
 Select * from sjObjects
-where Acitve > 0
+where Active > 0
 ;
 
 
@@ -46,16 +46,16 @@ where PropValue != '***deleted***'
 
 CREATE VIEW IF NOT EXISTS   ObjProp  as
 Select o.ID, o.ObjectType, o.InstanceName, o.Active,
-p.PropName, p.PropValue, p.PropType, p.Sort, p.VariableFlag, p.StartTS      
+p.PropName, p.PropValue, p.PropType, p.Sort, p.VarFlag, p.StartTS      
 from Objects as o
-join Properties as p
+left outer join Properties as p
     on o.ID = p.ID 
 ;
 
 
 CREATE VIEW IF NOT EXISTS   ObjProp_History  as
 Select o.ID, o.ObjectType, o.InstanceName, o.Active,
-p.PropName, p.PropValue, p.PropType, p.Sort, p.VariableFlag, p.StartTS      
+p.PropName, p.PropValue, p.PropType, p.Sort, p.VarFlag, p.StartTS      
 from sjObjects as o
 left outer join sjProperties as p
     on o.ID = p.ID 

@@ -28,6 +28,9 @@ class sj_Logger(logging.Logger):
         self.info(str(msg).upper())
         self.info('='*60)
 
+    def line(self):
+        self.info('-'*60)
+
     def ui(self, msg):
         self.info('(ui-log) %s' %msg)
 

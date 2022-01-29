@@ -43,10 +43,19 @@ utils = {'log':log, 'event':event, 'paths':paths}
 orgfactory = sjorg.sj_OrgFactory(utils)
 orgfactory.load_all_organizations_in_folder(paths.configPath.resolve())
 
-orgfactory.new_organization('Zebra')
+
+## --------------------------------
+## Demonstrate basic functionality needed for UI:
+## --------------------------------
+
+# create new org:
+event.broadcast('org.new', 'Alpha')
+event.broadcast('org.new', 'Bravo')
+event.broadcast('org.new', 'Charlie')
+event.broadcast('org.new', 'Local')
+event.broadcast('org.new', 'Global')
 
 
-
-
+# event.print_handlers_to_log()
 
 log.header('Application Complete, Closing')

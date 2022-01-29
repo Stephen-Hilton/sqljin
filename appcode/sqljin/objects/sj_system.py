@@ -2,49 +2,39 @@ from pathlib import Path
 import importlib
 import sys
 
-try:
-    from .sj_orgs import sj_Org
-except:
-    pass
+import objects.sj_datamgr  as sjdatamgr  
+import objects.sj_object   as sjobject
 
-from ..util.sj_event import sj_Event
-from ..util.sj_logger import sj_Logger
-from ..util.sj_paths import sj_Paths
+import util.sj_event  as sjevent
+import util.sj_logger as sjlog
+import util.sj_paths  as sjpaths
 
-class sj_System():
-    name: str = ''
-    driver: Path = ''
-    host: str = ''
-    encrypt: bool = False
-    logmech: str = ''
-    credentials_id: int = None
-    credentials: dict = None
-     
-    event: sj_Event
-    log: sj_Logger
-    paths: sj_Paths
-    # org: sj_Org
+class sj_System(sjobject.sj_Object):
 
-    def __init__(self, parentorg:object, sysobj:list =[] ) -> None:
-        self.log = parentorg.log
-        self.event = parentorg.event
-        self.paths = parentorg.paths
-        self.org = parentorg
+    @property
+    def host(self): self.getprop('host', '-- not set --')
+    @host.setter
+    def host(self, value): return self.setprop('host', value) 
 
-        if sysobj == []:
-            self.log.error(f'incomplete data provided for creation of system: {sysobj}')
-        else:
-            self.name = sysobj['instance']
-            self.log.info(f'New ')
-            if 'driver'   in sysobj: self.driver   = Path(sysobj['driver'])
-            if 'host'     in sysobj: self.host     = sysobj['host']
-            if 'encrypt'  in sysobj: self.encrypt  = sysobj['encrypt']
-            if 'logmech'  in sysobj: self.logmech  = sysobj['logmech']
-            if 'credentials_id' in sysobj: self.credentials_id = sysobj['credentials_id']
+    @property
+    def driver(self): self.getprop('driver', '-- not set --')
+    @host.setter
+    def driver(self, value): return self.setprop('driver', value) 
 
-    def get_credentials(self):
-        if not self.credentials_id:
-            self.log.error(f'no credentials defined for system {self.name}')
-        else:
-            self.log.debug(f'retrieving linked credential object')
-            self.org.get_object_properties(self.credentials_id,'credentials_id')
+    @property
+    def encrypt(self): self.getprop('encrypt', '-- not set --')
+    @host.setter
+    def encrypt(self, value): return self.setprop('encrypt', value) 
+
+    @property
+    def logmech(self): self.getprop('logmech', '-- not set --')
+    @host.setter
+    def logmech(self, value): return self.setprop('logmech', value) 
+
+    @property
+    def credentials(self): self.getprop('credentials', '-- not set --')
+    @host.setter
+    def credentials(self, value): return self.setprop('credentials', value) 
+    
+
+    

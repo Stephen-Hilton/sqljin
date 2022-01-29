@@ -147,45 +147,47 @@ class dbConn_Base():
             return None 
         else:
             # build return object:
-            rows = rtn[1]
+            rows = rtn[1]  # TODO: either rows returned, or if zero, rows affected
             df = pd.DataFrame(rtn[0])
-            df.columns = [col.lower() for col in list(df.columns)]
+            df.columns = [col.lower() for col in list(df.columns)] # why lower?  
 
             if logsql: self.log.info('execution complete (%i rows)' %rows)
             if autocommit: self.commit()
 
 
             try:
-                if   datareturned == 'none': rtn = None
-                elif datareturned in ['df','dataframe','data','pandas']:  rtn = df
-                elif datareturned in ['scalar','single','first']: rtn = df.iloc[0,0]
-                elif datareturned in ['dict', 'dictcol']:  rtn = df.to_dict() 
+                if   datareturned.lower() == 'none': datartn = None
+                elif datareturned in ['df','dataframe','data','pandas']:  datartn = df
+                elif datareturned in ['scalar','single','first']: datartn = df.iloc[0,0]
+                elif datareturned in ['dict', 'dictcol']:  datartn = df.to_dict() 
                 elif datareturned in ['dictrow','list']:  
-                    rtn = df.to_dict('records')
-                elif datareturned == 'json':  rtn = df.to_json()
-                elif datareturned in ['str','string','cli']:   rtn = df.to_string()
-                elif datareturned == 'csv':   rtn = df.to_csv(na_rep = '', index = False)  
-                elif datareturned == 'html':  rtn = df.to_html()
-                elif datareturned == 'pickle': rtn = df.to_pickle(savepath)
+                    datartn = df.to_dict('records')
+                elif datareturned == 'json':  datartn = df.to_json()
+                elif datareturned in ['str','string','cli']:   datartn = df.to_string()
+                elif datareturned == 'csv':   datartn = df.to_csv(na_rep = '', index = False)  
+                elif datareturned == 'html':  datartn = df.to_html()
+                elif datareturned == 'pickle': datartn = df.to_pickle(savepath)
                 else:
                     self.log.warning("""data return requested (%s) is not supported.
                     Currently supported types: [dataframe/df/data, dict, list, json, str/string/cli, csv, html, json]
                     For now, returning a dataframe, and you''ll like it.""" %datareturned)
                 if savepath and datareturned != 'pickle':
                     with open( Path(savepath).resolve(),'w') as fh:
-                        fh.write(str(rtn))
+                        fh.write(str(datartn))
             except Exception as e:
                 self.log.exception(f"data returned doesn't match data return requested ({datareturned}), returning None")
-                rtn = None
+                datartn = None
 
-            return {"data":rtn, "rows":rows, "columns": list(df.columns)}
+            rtndict = {"data":datartn, "rows":rows, "columns": list(df.columns)}
+            if savepath: rtndict["path"] = savepath.resolve()
+            return rtndict
             
 
     def _execute_(self, sql) -> tuple:
-        # TODO: implement execution logic, always returned as a tuple of (int, dict)
+        # TODO: implement execution logic, always returned as a tuple of (dataframe, int)
         rows = 4
         dfReturn = pd.DataFrame({'col_1': [3, 2, 1, 0], 'col_2': ['a', 'b', 'c', 'd']})
-        return (rows, dfReturn)
+        return (dfReturn, rows)
 
     def commit(self, logsql=True) -> bool:
         if logsql: self.log.debug(f'attempting to commit changes to {self.systemname} ({self.classname})...')

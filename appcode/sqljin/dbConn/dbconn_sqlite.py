@@ -44,7 +44,7 @@ class dbConn_SQLite(dbConn_Base):
             return (df, len(rows))
         except TypeError as e:
             cur = self.connection.execute(sql)
-            return (len(rows), None)
+            return (None, len(rows))
         except Exception as e:
             self.log.error('error during execution: %s' %str(e))
             return None

@@ -17,6 +17,7 @@ from .sj_logger import sj_Logger
 class sj_Event():
     handlers = {}
     log: sj_Logger
+    debug_events:bool = False
 
     def __init__(self, log:sj_Logger) -> None:
         self.log = log
@@ -24,8 +25,11 @@ class sj_Event():
     def add_handler(self, eventname:str, fn):
         if not eventname in self.handlers:
             self.handlers[eventname] = []
-        self.handlers[eventname].append(fn)
-        self.log.debug('new event handler "%s" registered to listen for event "%s"' %(str(fn.__name__), eventname))
+        if fn not in self.handlers[eventname]:
+            self.handlers[eventname].append(fn)
+            self.log.debug('new event handler "%s" registered to listen for event "%s"' %(str(fn.__name__), eventname))
+        else:
+            self.log.warning('event handler found duplicate function per event, ignoring to prevent duplication')
 
     def broadcast(self, eventname:str, *args, **kwargs) -> list:            
         # confirm the event exists as a registered handler:
@@ -35,7 +39,8 @@ class sj_Event():
 
         # if has a handler, log and send the data off to the correct function(s) for execution   
         if eventname[:3] != 'log':
-            self.log.debug(f'EVENT "{eventname}" was broadcast and picked up by {len(self.handlers[eventname])} self.handlers')
+            handlerstring =  "(%s)" %str(', '.join([f.__name__ for f in self.handlers[eventname] ]))
+            self.log.debug(f'EVENT "{eventname}" was broadcast and picked up by functions: {handlerstring}')
         rtn = []
         for fn in self.handlers[eventname]:
             rtn.append( fn(*args, **kwargs) )
@@ -57,4 +62,10 @@ class sj_Event():
         self.add_handler('log.ui.updater', self.log.ui)
         self.add_handler('log.ui.main', self.log.ui)
         self.add_handler('log.tbd', self.log.tbd)
+
+    def print_handlers_to_log(self):
+        self.log.debug('print out of all event handlers:')
+        for e, fn in self.handlers.items():  
+            fns = ', '.join( [f.__name__ for f in fn] ) 
+            print('    ', e, '=', f"({fns})")
 
