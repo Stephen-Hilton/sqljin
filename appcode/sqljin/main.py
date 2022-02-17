@@ -37,11 +37,13 @@ utils = {'log':log, 'event':event, 'paths':paths}
 
 
 ## --------------------------------
-## Initial Object Setup:
+## Initialize all Factories (and event handlers)
 ## --------------------------------
-# create Organization Factory
 orgfactory = sjorg.sj_OrgFactory(utils)
-orgfactory.load_all_organizations_in_folder(paths.configPath.resolve())
+
+
+event.broadcast('app.started')
+
 
 
 ## --------------------------------
@@ -49,12 +51,13 @@ orgfactory.load_all_organizations_in_folder(paths.configPath.resolve())
 ## --------------------------------
 
 # create new org:
-event.broadcast('org.new', 'Alpha')
-event.broadcast('org.new', 'Bravo')
+event.broadcast('user.request.new.org', 'Alpha')
+event.broadcast('user.request.new.org', 'Bravo')
 event.broadcast('org.new', 'Charlie')
 event.broadcast('org.new', 'Local')
 event.broadcast('org.new', 'Global')
 
+event.broadcast('user.request.new.Alpha.system', 'Transcend_Alpha')
 
 # event.print_handlers_to_log()
 

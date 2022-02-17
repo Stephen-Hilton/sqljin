@@ -38,17 +38,21 @@ class sj_Object():
     props: dict 
 
     data_changed:bool = False
+    autosave:bool = True 
+    db_passthru:bool = False
     handlers_added:bool = False 
-    _status_:str = 'empty'
+    _status:str = 'empty'
     eventprefix:str = None
 
-    def __init__(self, utils:dict, parentOrg:object, loadcriteria = None) -> None:
+    def __init__(self, utils:dict, parentOrg:object, loadcriteria = None, autosave:bool = True, db_passthru:bool = False) -> None:
         self.event = utils['event']
         self.log   = utils['log']
         self.paths = utils['paths']
         self.utils = utils 
         self.org = parentOrg
         self.orgname = parentOrg.name 
+        self.autosave = autosave
+        self.db_passthru = db_passthru
 
         if loadcriteria is not None:
             if   type(loadcriteria) is dict:
@@ -95,19 +99,19 @@ class sj_Object():
             self.event.add_handler(f"{self.eventprefix}.save", self.save)
             self.event.add_handler(f"{self.eventprefix}.expire", self.expire)
             self.event.add_handler(f"{self.eventprefix}.restore", self.restore)
-            self.event.add_handler(f"{self.eventprefix}.remove.deleted", self.allprop_remove_deleted)
-            self.event.add_handler(f"{self.eventprefix}.sort", self.allprop_sort)
+            self.event.add_handler(f"{self.eventprefix}.remove.deleted", self.allprops_remove_deleted)
+            self.event.add_handler(f"{self.eventprefix}.sort", self.allprops_sort)
             self.event.add_handler(f"{self.eventprefix}.status", self.set_status)
             self.event.add_handler(f"{self.eventprefix}.add.prop", self.prop_add)
             self.handlers_added = True
 
     @property
     def status(self):
-        return self._status_
+        return self._status
 
     @status.setter
     def status(self, newstatus:str):
-        self._status_ = newstatus
+        self._status = newstatus
         if self.eventprefix:
             self.event.broadcast(f"{self.eventprefix}.status.changed", self)
     def set_status(self, newstatus:str): # for the event
@@ -119,8 +123,7 @@ class sj_Object():
         self.props = {}
         for row in propdata:
             if row['propvalue'] != '***deleted***':
-                prop = self.prop_add(row['propname'], row['propvalue'], row['proptype'], row['sort'], row['varflag'], row['startts'])
-                self.props[prop.propname] = prop 
+                self.prop_add(row['propname'], row['propvalue'], row['proptype'], row['sort'], row['varflag'], row['startts'])
         return self.props
 
 
@@ -141,13 +144,13 @@ class sj_Object():
 
 
     def save(self):
-        return self.event.broadcast(f"{self.orgname}.datamgr.save.id", self)
+        return self.event.broadcast(f"{self.orgname}.datamgr.save", self)
 
     def expire(self):
-        return self.event.broadcast(f"{self.orgname}.datamgr.expire.id", self)
+        return self.event.broadcast(f"{self.orgname}.datamgr.expire", self)
 
     def restore(self):
-        return self.event.broadcast(f"{self.orgname}.datamgr.restore.id", self)
+        return self.event.broadcast(f"{self.orgname}.datamgr.restore", self)
 
 
     # Property functions
@@ -165,28 +168,29 @@ class sj_Object():
             return self.getprop(propname)
 
 
-    def prop_add(self, propname:str, propvalue:str='', proptype:str='str', sort:int=500, varflag:bool = True, startts:str = ''):
-        prop = sjprop.sj_Property(self, propname, propvalue, proptype, sort, varflag, startts)
+    def prop_add(self, propname:str, propvalue:str='', proptype:str='str', sort:int=500, varflag:bool = True, startts:str=''):
+        prop = sjprop.sj_Property(self, newdata={'id':self.id, 'propname':propname, 'propvalue':propvalue, 'proptype':proptype, 'sort':sort, 'varflag':varflag, 'startts':startts}, autosave=self.autosave, db_passthru=self.db_passthru )
         self.props[prop.propname] = prop 
         self.log.debug(f'property added: {self.orgname}.{self.objecttype}.{self.instancename}.{propname} ({proptype}) = {propvalue}')
         return prop 
 
-    def allprop_sort(self):
+    def allprops_sort(self):
         self.log.debug(f"sorting properties within object")
         pass
 
-    def allprop_save(self):
+    def allprops_save(self):
         for prop in self.props:
             prop.save()
 
-    def allprop_reload(self):
+    def allprops_reload(self):
         for prop in self.props:
             prop.reload()
 
-    def allprop_remove_deleted(self) -> dict:
+    def allprops_remove_deleted(self) -> dict:
         newprops = {}
         for prop in self.props:
-            if prop.propvalue != '***deleted***':
+            if prop.propvalue != '***deleted***' or prop.data_changed is not None:
                 newprops[prop.propname] = prop 
         self.props = newprops
+        self.event.broadcast(f"{self.eventprefix}.props.loaded", self)
 

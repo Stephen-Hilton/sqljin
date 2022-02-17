@@ -4,6 +4,7 @@
 #
 # ######################################################
 
+from enum import auto
 from pathlib import Path
 from datetime import datetime
 
@@ -15,6 +16,7 @@ import util.sj_paths  as sjpaths
 
 import objects.sj_datamgr  as sjdatamgr  
 import objects.sj_object   as sjobject
+import objects.sj_system   as sjsystem
 
 
 class sj_Org(sjobject.sj_Object):
@@ -24,13 +26,21 @@ class sj_Org(sjobject.sj_Object):
     systems: list = None 
     creds: list = None 
     collections: list = None 
+    autosave = True 
+    db_passthru = False 
 
 
-    def __init__(self, utils:dict, orgname:str) -> None:
+    def __init__(self, utils:dict, orgname:str, autosave:bool = True, db_passthru:bool = False) -> None:
         self.name = orgname 
         self.id = 1
+        self.autosave = autosave
+        self.db_passthru = db_passthru
         super().__init__(utils, self, loadcriteria=None) 
     
+        self.event.add_handler(f"user.request.refresh.orgs", self.load)
+        self.event.add_handler(f"user.request.new.{orgname}.system", self.new_system)
+        self.event.add_handler(f"{orgname}.system.new", self.new_system)
+
 
     def load(self):
         super().load()
@@ -42,24 +52,43 @@ class sj_Org(sjobject.sj_Object):
         self.log.info(f'oranization {self.name} fully loaded with all direct children')
         self.log.line()
 
+
+
     # Systems
-    def new_system(self):
-        pass 
+    def new_system(self, sysname:str, **kwargs):
+        rtn = self.event.broadcast(f"{self.orgname}.datamgr.new", objecttype='System', instancename=sysname, )
+        newsys = sjsystem.sj_System(self.utils, self, ('System', sysname), self.autosave, self.db_passthru)
+        self.systems.append(newsys)
+        
 
     def load_systems(self) -> list:
+        self.systems = []
         self.log.info(f'loading all systems into org {self.name}')
-        #objlist = self.event.broadcast(f"{self.orgname}.datamgr.load.id", self.id )
+        objdata = self.event.broadcast(f"{self.orgname}.datamgr.get.objects", objecttype='System' )[0]
+        if objdata['rows'] == 0:
+            self.log.warning('No Systems Found')
+        else:
+            for row in objdata['data']:
+                newsys = sjsystem.sj_System(self.utils, self, ('System', row['instancename']), self.autosave, self.db_passthru)
+                self.systems.append(newsys)
 
-        # TODO
+
 
     def load_creds(self) -> list:
-        self.log.info(f"loading all system credenitals into org {self.name}")
-        # TODO
+        self.log.info(f'loading all systems into org {self.name}')
+        objdata = self.event.broadcast(f"{self.orgname}.datamgr.get.objects", objecttype='Credential' )[0]
+        if objdata['rows'] == 0:
+            self.log.warning('No Credentials Found')
+        else:
+            pass  # TODO: Magic
 
     def load_collections(self) -> list:
-        self.log.info(f'loading all collections into org {self.name}')
-        # TODO
-
+        self.log.info(f'loading all systems into org {self.name}')
+        objdata = self.event.broadcast(f"{self.orgname}.datamgr.get.objects", objecttype='Collection' )[0]
+        if objdata['rows'] == 0:
+            self.log.warning('No Collections Found')
+        else:
+            pass  # TODO: Magic
 
 
 
@@ -85,9 +114,17 @@ class sj_OrgFactory():
         self.event.add_handler("org.new"       , self.new_organization)
         self.event.add_handler("org.load"      , self.load_organization)
         self.event.add_handler("orgs.load.allinfolder" , self.load_all_organizations_in_folder) 
+        # reacting to events:
+        self.event.add_handler("app.started" , self.load_all_organizations_in_folder) 
+        self.event.add_handler("user.request.new.org" , self.new_organization) 
+        self.event.add_handler("test.request.new.org" , self.new_organization) 
+        # add to orgs:
+        # self.event.add_handler("user.request.refresh.orgs" , 
+        
 
 
-    def load_all_organizations_in_folder(self, folderpath:Path):
+    def load_all_organizations_in_folder(self, folderpath:Path=None):
+        if folderpath is None: folderpath = self.paths.configPath.resolve()
         self.log.info(f'preparing to load all Oranizations in folder: {str(folderpath.resolve())}')
         for fo in folderpath.glob('*/'):
             configdb = Path(fo.joinpath('config.db'))
