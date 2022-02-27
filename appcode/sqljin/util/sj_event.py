@@ -4,13 +4,7 @@ print(f'loaded {__name__}')
 # event convension:  action.type.name  or  action.type.parent.name
 # request is current tense, notifications are past tense
 #    some examples:
-#           update.system.teradata
-#           updated.system.teradata
-#           load.collection.teradata.metrics
-#           loaded.collection.teradata.solutions
-#           get.db.global.variables
-#           got.db.global.variables
-#           updated.system.teradata.variables
+
 
 from .sj_logger import sj_Logger
 

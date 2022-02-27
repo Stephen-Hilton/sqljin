@@ -1,12 +1,12 @@
 # ######################################################
 #
-# Organization and Org Factory structures
+# Object Factory - create / load various object types
 #
 # ######################################################
 
-from enum import auto
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
+from dataclasses import dataclass
 
 import dbConn.dbconn_sqlite as dbConnSQLite
 
@@ -15,80 +15,93 @@ import util.sj_logger as sjlog
 import util.sj_paths  as sjpaths
 
 import objects.sj_datamgr  as sjdatamgr  
-import objects.sj_object   as sjobject
-import objects.sj_system   as sjsystem
+import objects.sj_property as sjprop  
+import objects.sj_object   as sjobject  
+import objects.sj_orgs     as sjorg
 
 
-class sj_Org(sjobject.sj_Object):
-    name: str = ''
-    configdb_filepath: Path 
-
-    systems: list = None 
-    creds: list = None 
-    collections: list = None 
-    autosave = True 
-    db_passthru = False 
 
 
-    def __init__(self, utils:dict, orgname:str, autosave:bool = True, db_passthru:bool = False) -> None:
-        self.name = orgname 
-        self.id = 1
-        self.autosave = autosave
-        self.db_passthru = db_passthru
-        super().__init__(utils, self, loadcriteria=None) 
-    
-        self.event.add_handler(f"user.request.refresh.orgs", self.load)
-        self.event.add_handler(f"user.request.new.{orgname}.system", self.new_system)
-        self.event.add_handler(f"{orgname}.system.new", self.new_system)
+class sj_ObjectFactory():
+    orgs: dict = {}
+    log: sjlog.sj_Logger
+    paths: sjpaths.sj_Paths
+    event: sjevent.sj_Event
+    dbconn: dbConnSQLite.dbConn_SQLite
 
+    def __init__(self, utils) -> None:
+        self.event = utils['event']
+        self.log   = utils['log']
+        self.paths = utils['paths']
+        self.utils = utils
+        self.orgs = {}
+        self.log.debug('Object Factory Instantiated')
 
-    def load(self):
-        super().load()
-        
-        # build child objects
-        self.systems = self.load_systems()
-        self.creds = self.load_creds()
-        self.collections = self.load_collections()
-        self.log.info(f'oranization {self.name} fully loaded with all direct children')
-        self.log.line()
+    # Organizations
+    def add_org(self):
+        pass 
 
+    def get_org(self):
+        pass
+
+    def get_orgs(self):
+        pass
 
 
     # Systems
-    def new_system(self, sysname:str, **kwargs):
-        rtn = self.event.broadcast(f"{self.orgname}.datamgr.new", objecttype='System', instancename=sysname, )
-        newsys = sjsystem.sj_System(self.utils, self, ('System', sysname), self.autosave, self.db_passthru)
-        self.systems.append(newsys)
-        
+    def add_system(self):
+        pass 
 
-    def load_systems(self) -> list:
-        self.systems = []
-        self.log.info(f'loading all systems into org {self.name}')
-        objdata = self.event.broadcast(f"{self.orgname}.datamgr.get.objects", objecttype='System' )[0]
-        if objdata['rows'] == 0:
-            self.log.warning('No Systems Found')
-        else:
-            for row in objdata['data']:
-                newsys = sjsystem.sj_System(self.utils, self, ('System', row['instancename']), self.autosave, self.db_passthru)
-                self.systems.append(newsys)
+    def get_system(self):
+        pass
+
+    def get_systems(self):
+        pass
 
 
+    # Credentials
+    def add_cred(self):
+        pass 
 
-    def load_creds(self) -> list:
-        self.log.info(f'loading all systems into org {self.name}')
-        objdata = self.event.broadcast(f"{self.orgname}.datamgr.get.objects", objecttype='Credential' )[0]
-        if objdata['rows'] == 0:
-            self.log.warning('No Credentials Found')
-        else:
-            pass  # TODO: Magic
+    def get_cred(self):
+        pass
 
-    def load_collections(self) -> list:
-        self.log.info(f'loading all systems into org {self.name}')
-        objdata = self.event.broadcast(f"{self.orgname}.datamgr.get.objects", objecttype='Collection' )[0]
-        if objdata['rows'] == 0:
-            self.log.warning('No Collections Found')
-        else:
-            pass  # TODO: Magic
+    def get_creds(self):
+        pass
+
+
+    # Collections
+    def add_collection(self):
+        pass 
+
+    def get_collection(self):
+        pass
+
+    def get_collections(self):
+        pass
+
+
+    # Jobs
+    def add_job(self):
+        pass 
+
+    def get_job(self):
+        pass
+
+    def get_jobs(self):
+        pass
+
+
+    # Steps
+    def add_step(self):
+        pass 
+
+    def get_step(self):
+        pass
+
+    def get_steps(self):
+        pass
+
 
 
 
