@@ -15,6 +15,7 @@ import objects.sj_object   as sjobject
 import objects.sj_orgs     as sjorg  
 
 
+
 ## --------------------------------
 ## Initial Utility Setup:
 ## --------------------------------
@@ -37,11 +38,19 @@ utils = {'log':log, 'event':event, 'paths':paths}
 
 
 ## --------------------------------
-## Initialize all Factories (and event handlers)
+## Initialize ObjectFactory 
 ## --------------------------------
-orgfactory = sjorg.sj_OrgFactory(utils)
 
 
+
+# orgfactory = sjorg.sj_OrgFactory(utils)
+
+
+
+
+## --------------------------------
+## Mark the app as started
+## --------------------------------
 event.broadcast('app.started')
 
 
