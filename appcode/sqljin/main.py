@@ -2,12 +2,14 @@ print(f'loaded {__name__}')
 
 import sys, os
 from pathlib import Path
+from datetime import datetime
 
 import dbConn.dbconn_sqlite as dbConnSQLite
 
 import util.sj_event  as sjevent
 import util.sj_logger as sjlog
 import util.sj_paths  as sjpaths
+import util.sj_misc   as sjmisc 
 
 import objects.sj_datamgr  as sjdatamgr  
 import objects.sj_property as sjprop  
@@ -22,6 +24,7 @@ import objects.sj_orgs     as sjorg
 # setup logging and path class
 paths = sjpaths.sj_Paths()
 log = sjlog.sj_Logger(paths)
+misc = sjmisc.sj_Misc(log)
 log.header(f'WELCOME TO {paths.appname.upper()}!')
 log.info('application environment paths:\n\t' + '\n\t'.join( [str(x) for x in sys.path]))
 
@@ -34,7 +37,7 @@ log.debug('testing event framework...')
 broadcast('test', 'event framework working')
 
 # bundle utilities for easier passing around
-utils = {'log':log, 'event':event, 'paths':paths}
+utils = {'log':log, 'event':event, 'paths':paths, 'misc':misc}
 
 
 ## --------------------------------
@@ -44,6 +47,15 @@ utils = {'log':log, 'event':event, 'paths':paths}
 
 
 # orgfactory = sjorg.sj_OrgFactory(utils)
+
+
+
+
+for fmt in ['m/d/yy h:m:s', 'yyyy-mm-dd hh:mm:ss', 'mm/dd/yyyy', 'hh:mm:ss', 'yyyymmdd_hhmmss', 'Excel', '24hh == 12hhp']:
+    oldfmt = fmt.rjust(20,' ')
+    newfmt = misc.translate_simple_dateformat(fmt)
+    nowish = datetime.now()
+    print(f'from {oldfmt}   to   {newfmt.ljust(25," ")}  looks like { nowish.strftime(newfmt)}')
 
 
 

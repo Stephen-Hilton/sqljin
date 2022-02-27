@@ -26,4 +26,11 @@ event.add_handler('utils.GET', lambda:utils)
 
 
 
+for fmt in ['m/d/yy h:m:s', 'yyyy-mm-dd hh:mm:ss', 'mm/dd/yyyy', 'hh:mm:ss', 'yyyymmdd_hhmmss', 'Excel', '24hh == 12hhp']:
+    oldfmt = fmt.rjust(20,' ')
+    newfmt = misc.translate_simple_dateformat(fmt)
+    nowish = datetime.now()
+    print(f'from {oldfmt}   to   {newfmt.ljust(25," ")}  looks like { nowish.strftime(newfmt)}')
+
+
 log.header('Application Complete, Closing')
