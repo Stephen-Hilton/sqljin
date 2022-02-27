@@ -270,7 +270,7 @@
                   </property>
                   <item>
                    <property name="text">
-                    <string>Vantage Health Check</string>
+                    <string>Attribution Analysis</string>
                    </property>
                    <property name="checkState">
                     <enum>Unchecked</enum>
@@ -278,7 +278,39 @@
                   </item>
                   <item>
                    <property name="text">
-                    <string>Consulting Autotune</string>
+                    <string>Compete - BigQuery</string>
+                   </property>
+                   <property name="checkState">
+                    <enum>Unchecked</enum>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Compete - Snowflake</string>
+                   </property>
+                   <property name="checkState">
+                    <enum>Unchecked</enum>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Consulting - Autotune Presales</string>
+                   </property>
+                   <property name="checkState">
+                    <enum>Unchecked</enum>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Feature Adoption</string>
+                   </property>
+                   <property name="checkState">
+                    <enum>Unchecked</enum>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Vantage Health Check</string>
                    </property>
                    <property name="checkState">
                     <enum>Unchecked</enum>
