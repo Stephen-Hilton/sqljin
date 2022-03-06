@@ -11,10 +11,12 @@ import util.sj_logger as sjlog
 import util.sj_paths  as sjpaths
 import util.sj_misc   as sjmisc 
 
-import objects.sj_datamgr  as sjdatamgr  
-import objects.sj_property as sjprop  
-import objects.sj_object   as sjobject  
-import objects.sj_orgs     as sjorg  
+import objects.sj_objectfactory as sjobjfactory
+
+# import objects.sj_datamgr  as sjdatamgr  
+# import objects.sj_property as sjprop  
+# import objects.sj_object   as sjobject  
+# import objects.sj_orgs     as sjorg  
 
 
 
@@ -43,15 +45,21 @@ utils = {'log':log, 'event':event, 'paths':paths, 'misc':misc}
 ## --------------------------------
 ## Initialize ObjectFactory 
 ## --------------------------------
+objfactory = sjobjfactory.sj_ObjectFactory(utils)
+
+objfactory.load_org('Global')
 
 
-
+<<<<<<< HEAD
 # orgfactory = sjorg.sj_OrgFactory(utils)
 
 
+=======
+>>>>>>> aacbb7a6d05fbd7752649fb884aad00871f0fbce
 
 
 
+print('')
 
 ## --------------------------------
 ## Mark the app as started
