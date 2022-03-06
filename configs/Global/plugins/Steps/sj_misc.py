@@ -1,5 +1,5 @@
 from datetime import datetime 
-from .sj_logger import sj_Logger
+# from .sj_logger import sj_Logger
 
 print(f'loaded {__name__}')
 
@@ -7,9 +7,8 @@ print(f'loaded {__name__}')
 
 
 class sj_Misc():
-    log: sj_Logger
 
-    def __init__(self, log:sj_Logger=None) -> None:
+    def __init__(self, log=None) -> None:
         if log == None: 
             self.log = self.non_logger
         else:
