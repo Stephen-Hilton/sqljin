@@ -11,10 +11,12 @@ import util.sj_logger as sjlog
 import util.sj_paths  as sjpaths
 import util.sj_misc   as sjmisc 
 
-import objects.sj_datamgr  as sjdatamgr  
-import objects.sj_property as sjprop  
-import objects.sj_object   as sjobject  
-import objects.sj_orgs     as sjorg  
+import objects.sj_objectfactory as sjobjfactory
+
+# import objects.sj_datamgr  as sjdatamgr  
+# import objects.sj_property as sjprop  
+# import objects.sj_object   as sjobject  
+# import objects.sj_orgs     as sjorg  
 
 
 
@@ -43,22 +45,15 @@ utils = {'log':log, 'event':event, 'paths':paths, 'misc':misc}
 ## --------------------------------
 ## Initialize ObjectFactory 
 ## --------------------------------
+objfactory = sjobjfactory.sj_ObjectFactory(utils)
+
+objfactory.load_org('Global')
 
 
 
-# orgfactory = sjorg.sj_OrgFactory(utils)
 
 
-
-
-for fmt in ['m/d/yy h:m:s', 'yyyy-mm-dd hh:mm:ss', 'mm/dd/yyyy', 'hh:mm:ss', 'yyyymmdd_hhmmss', 'Excel', '24hh == 12hhp']:
-    oldfmt = fmt.rjust(20,' ')
-    newfmt = misc.translate_simple_dateformat(fmt)
-    nowish = datetime.now()
-    print(f'from {oldfmt}   to   {newfmt.ljust(25," ")}  looks like { nowish.strftime(newfmt)}')
-
-
-
+print('')
 
 ## --------------------------------
 ## Mark the app as started

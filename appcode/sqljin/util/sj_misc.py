@@ -58,7 +58,7 @@ class sj_Misc():
             str: format string compatible with datetime.datetime.strftime() functions
         """
         oldfmt = str(self.remove_extra_spaces(input_dateformat)).lower()
-        oldfmt = oldfmt.replace('12hh','ii').replace('12h','i').replace('24h','h').replace('excel','m/d/yy i:m:s p').lower()
+        oldfmt = oldfmt.replace('12hh','ii').replace('12h','i').replace('24h','h').replace('excel','m/d/yy i:m:s p').replace('logtime','yyyymmdd_hhmmss').replace('logdate','yyyymmdd').lower()
         charlist = []
         date_markers = ['y','d','/','-','w']
         time_markers = ['h','s',':','i','p','a']
@@ -105,16 +105,16 @@ class sj_Misc():
             cd = ''
             if   c['type'] == 't':
                 if   c['char'] == 'h': 
-                    if   c['repeat'] ==1: cd = '%-H'
+                    if   c['repeat'] ==1: cd = '%H' # previously %-H, but apparently that's not a thing on all OS
                     elif c['repeat'] >=2: cd = '%H'
                 elif c['char'] == 'i': 
-                    if   c['repeat'] ==1: cd = '%-I'
+                    if   c['repeat'] ==1: cd = '%I' # previously %-I
                     elif c['repeat'] >=2: cd = '%I'
                 elif c['char'] == 'm': 
-                    if   c['repeat'] ==1: cd = '%-M'
+                    if   c['repeat'] ==1: cd = '%M' # previously %-M
                     elif c['repeat'] >=2: cd = '%M'
                 elif c['char'] == 's': 
-                    if   c['repeat'] ==1: cd = '%-S'
+                    if   c['repeat'] ==1: cd = '%S' # previously %-S
                     elif c['repeat'] >=2: cd = '%S'
                 elif c['char'] in ['a','p']: cd = '%p' # am/pm
 
@@ -123,7 +123,7 @@ class sj_Misc():
                     if   c['repeat'] <=2: cd = '%y'
                     elif c['repeat'] >=3: cd = '%Y'
                 elif c['char'] == 'm': 
-                    if   c['repeat'] ==1: cd = '%-m'
+                    if   c['repeat'] ==1: cd = '%m' # previously %-m
                     elif c['repeat'] ==2: cd = '%m'
                     elif c['repeat'] ==3: cd = '%b'
                     elif c['repeat'] >=4: cd = '%B'
@@ -132,7 +132,7 @@ class sj_Misc():
                     elif c['repeat'] ==2: cd = '0%w'
                     elif c['repeat'] >=3: cd = '%W'
                 elif c['char'] == 'd': 
-                    if   c['repeat'] ==1: cd = '%-d'
+                    if   c['repeat'] ==1: cd = '%d' # previously %-d
                     elif c['repeat'] ==2: cd = '%d'
                     elif c['repeat'] ==3: cd = '%a'
                     elif c['repeat'] >=4: cd = '%A'            
@@ -141,6 +141,6 @@ class sj_Misc():
             fmt.append(cd)
         
         rtn = ''.join(fmt).strip()
-        self.log.debug(f'Translating date format from supplied:  "{input_dateformat}"  to Python specific  "{rtn}"')
+        self.log.debug(f'Translating simple format:  "{input_dateformat}"  to strftime:  "{rtn}"  aka "{ datetime.now().strftime(rtn) }"')
         return rtn
 
