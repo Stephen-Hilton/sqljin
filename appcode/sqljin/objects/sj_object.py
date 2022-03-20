@@ -144,7 +144,7 @@ class sj_Object():
     def prop_add(self, propname:str, propvalue:str='', proptype:str='str', sort:int=500, varflag:bool = True, startts:str=''):
         prop = sjprop.sj_Property(self, propname, propvalue, proptype, sort, varflag, startts )
         self.props[prop.propname] = prop 
-        self.log.debug(f'property added: {self.orgname}.{self.objecttype}.{self.instancename}.{propname} ({proptype}) = {propvalue}')
+        self.log.debug(f'property added: {self.orgname}.{self.objecttype}.{self.instancename}.{prop.propname} ({prop.proptype}) = {prop.propvalue}')
         return prop 
 
     def allprops_sort(self):

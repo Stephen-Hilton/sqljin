@@ -47,7 +47,10 @@ utils = {'log':log, 'event':event, 'paths':paths, 'misc':misc}
 ## --------------------------------
 objfactory = sjobjfactory.sj_ObjectFactory(utils)
 
-objfactory.load_org('Global')
+orgGlobal = objfactory.load_org('Global')
+
+orgGlobal.props
+orgGlobal.save()
 
 
 

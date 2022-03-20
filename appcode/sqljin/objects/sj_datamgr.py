@@ -84,8 +84,11 @@ class sj_DataMgr():
     def save_object(self, obj:sjobject.sj_Object):
         self.log.debug(f"saving object data ('{obj.id}'): {obj.orgname}.{obj.objecttype}.{obj.instancename}")
         # really, saving an object only means saving all properties
+        proplist = []
         for prop in obj.props:
-            prop.save()
+            proplist.append(prop)
+        self.save_props(proplist)
+
 
     def load_object_by_id(self, id:int) -> dict:
         self.log.debug(f"retrieving object data by ID ({id}) for organization: {self.orgname}") 
@@ -129,14 +132,14 @@ class sj_DataMgr():
         return rtn  
 
     def save_props(self, props:list):
-        """saves a list of dicts containing property data"""
+        """saves a list of sjProp objects containing property data"""
         if props != []:
             values = []
             for prop in props:
-                id = prop['id'] 
-                propname = str(prop['propname']).replace("'","''")
-                propvalue = str(prop['propvalue']).replace("'","''") if 'propvalue' in prop else '' 
-                proptype = prop['proptype'] if 'proptype' in prop else 'str'
+                id = prop.id
+                propname = str(prop.propname).replace("'","''")
+                propvalue = str(prop.propvalue).replace("'","''") 
+                proptype = str(prop.proptype)
                 values.append(f"( {id}, '{propname}', '{propvalue}', '{proptype}')")
 
             allvalues = ', \n'.join(values) 

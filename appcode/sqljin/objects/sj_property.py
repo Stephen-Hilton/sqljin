@@ -47,23 +47,38 @@ class sj_Property():
         self.parentobject = parentobject
         self.eventprefix_prop = f"{self.orgname}.datamgr.prop"
         self.eventprefix_obj  = f"{self.orgname}.datamgr"
-        
         self._id = parentobject.id
+        self.assign_property_data(propname, propvalue, proptype, sort, varflag, startts)
+        
+    def assign_property_data(self, propname:str, propvalue:str='', proptype:str='str', sort:int=500, varflag:bool = True, startts:str=''):
         self._propname = propname
-        self._proptype = proptype if proptype in self.valid_types else 'str'
-        self.propvalue = propvalue
+        self._propvalue = propvalue
         self.sort = sort
         self.varflag = varflag
         self._startts = startts 
-        self.data_changed = False 
+        if self.istype(proptype, propvalue): 
+            self._proptype = proptype
+        else:
+            self._proptype = self.autodetect_type(propvalue)
+            self.type_error = True
+            self.data_changed = True
 
-        
+
+    # Generic change functions:
+    def save(self) -> bool:
+        if self.data_changed:
+            newdata = self.event.narrowcast(f"{self.parentobject.orgname}.datamgr.save.prop", self)
+            self.assign_property_data(newdata[0]['data'])
+            return True
+        else:
+            self.utils['log'].debug(f"property {self.propname} in object {self.parentobject.instancename} not changed")
+            return False
 
     def delete(self):
         self.event.broadcast(f"{self.eventprefix_prop}.delete", self)
 
-        
-        
+    def restore(self):
+        self.event.broadcast(f"{self.eventprefix_prop}.restore", self)
     
     ## ----------------------------------------------------
     ##   Property GETTERS
@@ -99,27 +114,34 @@ class sj_Property():
     # PROPNAME -- Property Name, no setter
     # STARTTS -- Start Timestamp for the record, no setter
 
+
+    # PROPTYPE
+    @proptype.setter
+    def proptype(self, newtype:str) -> bool:
+        if self.proptype != str(newtype).strip(): # confirm being set to new value
+            if self.apply_type(self.propvalue, testtype = newtype) is None:  # confirm datatype is compatible with value
+                self.log.error(f"setting property-type for property: {self.propname}  failed due to data type validation failure")
+                self.log.error(f"  type: {newtype}  cannot support value: {self.propvalue}")
+                self.type_error = True
+            else: # data type will work:
+                self._proptype = newtype 
+                self.data_changed = True 
+                self.type_error = False
+                
     # PROPVALUE
     @propvalue.setter
     def propvalue(self, newvalue):
         if self.propvalue != str(newvalue).strip(): # confirm being set to new value
             newvalue = self.apply_type(newvalue, return_native_type = False)     # confirm value works with property type
             if newvalue is None:  # if proptype error, error and escape without saving/changing
-                self.log.error(f"property set failed due to data type validation failure, see messages immediately above for details")
+                self.log.error(f"setting property-value for property: {self.propname}  failed due to data type validation failure")
+                self.log.error(f"  type: {self.proptype}  cannot support value: {self.propvalue}")
+                self.type_error = True
             else:
                 self._propvalue = str(newvalue)
                 self.data_changed = True
+                self.type_error = False
 
-    # PROPTYPE
-    @proptype.setter
-    def proptype(self, newvalue:str) -> bool:
-        if self.proptype != str(newvalue).strip(): # confirm being set to new value
-            if self.apply_type(self.propvalue, testtype = newvalue) is None:  # confirm datatype is compatible with value
-                self.log.error(f"property set failed due to data type validation failure, see messages immediately above for details")
-            else: # data type will work:
-                self._proptype = newvalue 
-                self.data_changed = True 
-                
     # SORT
     @sort.setter
     def sort(self, newvalue:int) -> bool:
@@ -130,7 +152,7 @@ class sj_Property():
     # VARFLAG
     @varflag.setter 
     def varflag(self, newvalue:bool) -> bool:
-        if self.varflag != newvalue:
+        if self.varflag != newvalue: # confirm being set to new value
             self._varflag = newvalue
             self.data_changed = True 
 
@@ -149,7 +171,9 @@ class sj_Property():
             if   proptype == 'str':   rtn =  str(value).strip()
             elif proptype == 'int':   rtn =  int(value)
             elif proptype == 'dec':   rtn =  float(value)
-            elif proptype == 'bool':  rtn =  bool(value)
+            elif proptype == 'bool':  
+                if value.lower() not in ['true','false']: raise TypeError()
+                rtn =  bool(value)
             elif proptype == 'date': 
                 rtn =  parse(value)
                 timeformat = '%Y-%m-%d'
@@ -171,9 +195,9 @@ class sj_Property():
                     rtn =  str(Path(value).resolve()).strip()
                 else: raise Exception('type validation failed') 
             elif proptype == 'objlink':
-                pass 
+                raise NotImplementedError()
             elif proptype == 'proplink':
-                pass 
+                raise NotImplementedError()
 
             else:
                 if log: self.log.warning(f'unknown datatype during proptype validation: {proptype} in property: {self.propname}')
@@ -191,10 +215,22 @@ class sj_Property():
             
         except Exception as ex:
             if log: self.log.error(f"type validation failed! {value} cannot be used as a {proptype} ({ex})")
-            self.type_error = True
             return None 
 
-    def autodetect_type(self, newvalue:str) ->str:
-        for objtype in self.valid_types:
-            if self.apply_type(newvalue):
-                return objtype
+
+    def istype(self, proptype:str, newvalue:str=None) -> bool:
+        newvalue = newvalue if newvalue else self.propvalue
+        return (self.apply_type(newvalue, testtype=proptype, log=False) is not None)
+
+    def autodetect_type(self, newvalue:str, type_preference:str=None) ->str:
+        rtn = None 
+        if type_preference:
+            if self.istype(type_preference, newvalue):
+                rtn = type_preference
+        if not rtn:
+            for objtype in self.valid_types:
+                if self.istype(objtype):
+                    rtn = objtype
+                    break 
+        self.log.debug(f'Property Type Auto-Detect determined type to be: {rtn} for value: {newvalue}')
+        return rtn
