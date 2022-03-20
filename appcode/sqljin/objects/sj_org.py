@@ -1,6 +1,6 @@
 # ######################################################
 #
-# Organization and Org Factory structures
+# Organization structures
 #
 # ######################################################
 
@@ -30,16 +30,16 @@ class sj_Org(sjobject.sj_Object):
     db_passthru = False 
 
 
-    def __init__(self, utils:dict, orgname:str, autosave:bool = True, db_passthru:bool = False) -> None:
+    def __init__(self, utils:dict, orgname:str) -> None:
         self.name = orgname 
         self.id = 1
-        self.autosave = autosave
-        self.db_passthru = db_passthru
-        super().__init__(utils, self, loadcriteria=None) 
+        super().__init__(utils, self) 
+        self.configdb_filepath = Path(self.paths.configPath / orgname)
     
-        self.event.add_handler(f"user.request.refresh.orgs", self.load)
-        self.event.add_handler(f"user.request.new.{orgname}.system", self.new_system)
-        self.event.add_handler(f"{orgname}.system.new", self.new_system)
+
+    def add_handlers(self):
+        super().add_handlers()
+        self.event.add_handler(f"user.request.new.{self.orgname}.system", self.new_system)
 
 
     def load(self):

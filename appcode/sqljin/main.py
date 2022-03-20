@@ -50,14 +50,6 @@ objfactory = sjobjfactory.sj_ObjectFactory(utils)
 objfactory.load_org('Global')
 
 
-<<<<<<< HEAD
-# orgfactory = sjorg.sj_OrgFactory(utils)
-
-
-=======
->>>>>>> aacbb7a6d05fbd7752649fb884aad00871f0fbce
-
-
 
 print('')
 

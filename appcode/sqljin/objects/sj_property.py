@@ -17,7 +17,7 @@ import util.sj_paths  as sjpaths
 import objects.sj_datamgr  as sjdatamgr  
 import objects.sj_property as sjprop  
 import objects.sj_object   as sjobject  
-import objects.sj_orgs     as sjorg
+import objects.sj_org     as sjorg
 
 
 class sj_Property():
@@ -25,98 +25,81 @@ class sj_Property():
     event: sjevent.sj_Event
     paths: sjpaths.sj_Paths
     orgname: str
-    objectid: int 
     eventprefix:str
     _id: int = None
     _propname: str = None 
-    _propvalue: str 
-    _proptype: str 
-    _sort: int 
-    _varflag: bool 
-    _startts: str 
-    data_changed: bool = None 
-    autosave: bool = True
-    db_passthru:bool = False
+    _proptype: str = None 
+    _propvalue: str = None 
+    _sort: int = None 
+    _varflag: bool = None 
+    _startts: str = None 
+    data_changed: bool = False 
+    type_error: bool = False
 
+    # ordered most restrictive to least (tested in this order)
+    valid_types =  ['url','email','ip','timestamp','ts','time','date','datetime','path','bool','objlink','proplink','dec','int','str'] 
     
-    def __init__(self, parentobject, loadname:str = None, newdata:dict = None, autosave:bool=True, db_passthru:bool=False) -> None:
+    def __init__(self, parentobject, propname:str, propvalue:str='', proptype:str='str', sort:int=500, varflag:bool = True, startts:str='') -> None:
         self.event = parentobject.event
         self.log   = parentobject.log
         self.paths = parentobject.paths
-        self.objectid = parentobject.id 
         self.orgname = parentobject.orgname
         self.parentobject = parentobject
         self.eventprefix_prop = f"{self.orgname}.datamgr.prop"
         self.eventprefix_obj  = f"{self.orgname}.datamgr"
-        self.db_passthru = db_passthru
-        self.autosave = autosave
-
-        if loadname is not None:
-            self._id = parentobject.id
-            self._propname = loadname 
-            self.load()
-        elif newdata is not None:
-            self.assign_property_data(newdata)
         
-
-        
+        self._id = parentobject.id
+        self._propname = propname
+        self._proptype = proptype if proptype in self.valid_types else 'str'
+        self.propvalue = propvalue
+        self.sort = sort
+        self.varflag = varflag
+        self._startts = startts 
+        self.data_changed = False 
 
         
-    # Generic change functions:
-    def save(self) -> bool:
-        if self.data_changed or self.autosave:
-            newdata = self.event.broadcast(f"{self.eventprefix_prop}.save", self)
-            self.assign_property_data(newdata[0]['data'])
-            return True
-        else:
-            self.log.debug(f"property {self.propname} in object {self.parentobject.instancename} not changed")
-            return False
-    
-    def load(self):
-        newdata = self.event.broadcast(f"{self.eventprefix_prop}.load", self)
-        self.assign_property_data(newdata[0]['data'])
-
-    def reload(self):
-        self.load()
 
     def delete(self):
         self.event.broadcast(f"{self.eventprefix_prop}.delete", self)
-        
 
-    def assign_property_data(self, newdata:dict):
-        if not self.id: self._id = newdata['id']
-        if not self.propname: self._propname = newdata['propname']
-        self._propvalue = newdata['propvalue']
-        self._proptype = newdata['proptype']
-        self._sort = newdata['sort']
-        self._varflag = newdata['varflag']
-        self._startts = newdata['startts']
-        self.data_changed = False 
+        
         
     
     ## ----------------------------------------------------
-    ##   Property getters & setters 
+    ##   Property GETTERS
     ## ----------------------------------------------------
-
-    # ID -- Object ID, no setter
+    
     @property
     def id(self): return self._id 
 
-    # PROPNAME -- Property Name, no setter
     @property
     def propname(self): return self._propname
 
-
-    # PROPVALUE -- Property Value
     @property
-    def propvalue(self): 
-        if self.db_passthru:
-            rtn = self.event.broadcast(f"{self.eventprefix_prop}.load", self)
-            if rtn is not None: return rtn['data']['propvalue']
-            else: return None 
-        else:
-            return self._propvalue
+    def propvalue(self):  return self._propvalue
 
+    @property
+    def proptype(self):  return self._proptype
+
+    @property
+    def sort(self):  return self._sort
+
+    @property
+    def varflag(self):  return self._varflag
+
+    @property
+    def startts(self): return self._startts
+
+
+    ## ----------------------------------------------------
+    ##   Property SETTERS
+    ## ----------------------------------------------------
+
+    # ID -- Object ID, no setter
+    # PROPNAME -- Property Name, no setter
+    # STARTTS -- Start Timestamp for the record, no setter
+
+    # PROPVALUE
     @propvalue.setter
     def propvalue(self, newvalue):
         if self.propvalue != str(newvalue).strip(): # confirm being set to new value
@@ -126,19 +109,8 @@ class sj_Property():
             else:
                 self._propvalue = str(newvalue)
                 self.data_changed = True
-                if self.autosave or self.db_passthru: self.save()
 
-
-    # PROPTYPE -- Property Type
-    @property
-    def proptype(self): 
-        if self.db_passthru:
-            rtn = self.event.broadcast(f"{self.eventprefix_prop}.load", self)
-            if rtn is not None: return rtn['data']['proptype']
-            else: return None 
-        else:
-            return self._proptype
-
+    # PROPTYPE
     @proptype.setter
     def proptype(self, newvalue:str) -> bool:
         if self.proptype != str(newvalue).strip(): # confirm being set to new value
@@ -147,63 +119,32 @@ class sj_Property():
             else: # data type will work:
                 self._proptype = newvalue 
                 self.data_changed = True 
-                if self.autosave or self.db_passthru: self.save()
                 
-
-
-    # SORT -- Sort Order
-    @property
-    def sort(self): 
-        if self.db_passthru:
-            rtn = self.event.broadcast(f"{self.eventprefix_prop}.load", self)
-            if rtn is not None: return rtn['data']['sort']
-            else: return None 
-        else:
-            return self._sort
+    # SORT
     @sort.setter
     def sort(self, newvalue:int) -> bool:
         if self.sort != newvalue: # confirm being set to new value
             self._sort = newvalue 
             self.data_changed = True 
-            if self.autosave or self.db_passthru: self.save()
 
-
-    # VARFLAG -- variable flag indicator
-    @property
-    def varflag(self): 
-        if self.db_passthru:
-            rtn = self.event.broadcast(f"{self.eventprefix_prop}.load", self)
-            if rtn is not None: return rtn['data']['varflag']
-            else: return None
-        else:
-            return self._varflag
-
+    # VARFLAG
     @varflag.setter 
     def varflag(self, newvalue:bool) -> bool:
         if self.varflag != newvalue:
             self._varflag = newvalue
             self.data_changed = True 
-            if self.autosave or self.db_passthru: self.save()
 
-
-    # STARTTS -- Start Timestamp for the record (no setter)
-    @property
-    def startts(self): 
-        if self.db_passthru:
-            rtn = self.event.broadcast(f"{self.eventprefix_prop}.load", self)
-            if rtn is not None: return rtn['data']['startts']
-            else: return None 
-        else:
-            return self._startts
+    
 
 
 
-    def apply_type(self, value:str = None, return_native_type:bool = True, testtype:str = None ):
+
+    def apply_type(self, value:str = None, return_native_type:bool = True, testtype:str = None, log:bool = True) -> str:
         rtn = ''
         timeformat = ''
         proptype = testtype if testtype else self.proptype 
         if value is None: value = self.propvalue
-        self.log.debug(f'applying type to propvalue (return_native_type = {return_native_type})')
+        if log: self.log.debug(f'applying type to propvalue (return_native_type = {return_native_type})')
         try:
             if   proptype == 'str':   rtn =  str(value).strip()
             elif proptype == 'int':   rtn =  int(value)
@@ -235,9 +176,11 @@ class sj_Property():
                 pass 
 
             else:
-                self.log.warning(f'unknown datatype during proptype validation: {proptype} in property: {self.propname}')
+                if log: self.log.warning(f'unknown datatype during proptype validation: {proptype} in property: {self.propname}')
+                self.type_error = True
                 return None  
             
+            self.type_error = False
             if return_native_type:  # return the actual python typed object
                 return rtn 
             else:
@@ -247,10 +190,11 @@ class sj_Property():
                     return str(rtn)   # just return a string of the object
             
         except Exception as ex:
-            self.log.error(f"type validation failed! {value} cannot be used as a {proptype} ({ex})")
+            if log: self.log.error(f"type validation failed! {value} cannot be used as a {proptype} ({ex})")
+            self.type_error = True
             return None 
 
-    def validate_type(self, newvalue) -> bool:
-        adjvalue = self.apply_type(newvalue)
-        return adjvalue is not None
-            
+    def autodetect_type(self, newvalue:str) ->str:
+        for objtype in self.valid_types:
+            if self.apply_type(newvalue):
+                return objtype

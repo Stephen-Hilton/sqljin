@@ -17,7 +17,7 @@ import util.sj_paths  as sjpaths
 import objects.sj_datamgr  as sjdatamgr  
 import objects.sj_property as sjprop  
 import objects.sj_object   as sjobject  
-import objects.sj_orgs     as sjorg
+import objects.sj_org     as sjorg
 
 
 
@@ -38,62 +38,22 @@ class sj_Object():
     props: dict 
 
     data_changed:bool = False
-    autosave:bool = True 
-    db_passthru:bool = False
     handlers_added:bool = False 
     _status:str = 'empty'
     eventprefix:str = None
 
-    def __init__(self, utils:dict, parentOrg:object, loadcriteria = None, autosave:bool = True, db_passthru:bool = False) -> None:
+    def __init__(self, utils:dict, parentOrg:object) -> None:
         self.event = utils['event']
         self.log   = utils['log']
         self.paths = utils['paths']
         self.utils = utils 
         self.org = parentOrg
         self.orgname = parentOrg.name 
-        self.autosave = autosave
-        self.db_passthru = db_passthru
 
-        if loadcriteria is not None:
-            if   type(loadcriteria) is dict:
-                objdata = loadcriteria.data 
-            elif type(loadcriteria) is int:
-                objdata = self.event.broadcast(f"{self.orgname}.datamgr.load.id", loadcriteria )
-            elif type(loadcriteria) is tuple:
-                objdata = self.event.broadcast(f"{self.orgname}.datamgr.load.typename", loadcriteria[0], loadcriteria[1] )
-            else: 
-                self.log.error(f'New object requested in {self.orgname}, but unknown loadcritiera provided (probably programming mistake) - returning a blank object')   
-                return None ##
-        else:
-            self.log.warning(f'New object requested: {self.orgname}, but no data provided or found (or is an Organization) - returning a blank object.')
-            return None ##
-        
-        self.assign_object_data(objdata)
-        self.add_handlers()
-    
-
-
-    def assign_object_data(self, objdata) -> bool:
-        if 'data' not in objdata:
-            self.log.error(f'object data invalid: {str(objdata)}')
-            return False ##
-
-        data = objdata["data"]
-        if len(data) == 0: 
-            self.log.error(f'object returned no data from config.db, make sure object still exists / is active')
-            return False ##
-
-        self.id           = int(data[0]['id'])
-        self.objecttype   = str(data[0]['objecttype'])
-        self.instancename = str(data[0]['instancename'])
-        self.active       = bool(data[0]['active'])
-        self.props = self.build_properties(data)
-        self.status = 'loaded'
-        return True
 
 
     def add_handlers(self):
-        if not self.handlers_added and self.status == 'loaded':
+        if not self.handlers_added:
             self.eventprefix = f"{ self.orgname}.{self.objecttype}.{self.instancename}" 
             self.event.add_handler(f"{self.eventprefix}.load", self.load)
             self.event.add_handler(f"{self.eventprefix}.save", self.save)
@@ -103,6 +63,12 @@ class sj_Object():
             self.event.add_handler(f"{self.eventprefix}.sort", self.allprops_sort)
             self.event.add_handler(f"{self.eventprefix}.status", self.set_status)
             self.event.add_handler(f"{self.eventprefix}.add.prop", self.prop_add)
+
+            self.event.add_handler(f"user.request.refresh.all", self.load)
+            self.event.add_handler(f"user.request.refresh.{ self.objecttype }", self.load)
+            self.event.add_handler(f"user.request.refresh.{ self.objecttype }s", self.load)
+            self.event.add_handler(f"user.request.refresh.{ self.orgname }", self.load)
+
             self.handlers_added = True
 
     @property
@@ -128,19 +94,26 @@ class sj_Object():
 
 
     def load(self):
-        objdata = self.event.broadcast(f"{self.orgname}.datamgr.load.id", self.id)
-        if len(objdata) >1:
-            self.log.error(f"event ({self.orgname}.datamgr.load.id) returned more than one result, using first one found")
-            self.log.error(f"this can happen if event has more than one handler")
-        objdata = objdata[0] # always do this
+        objdata = self.event.narrowcast(f"{self.orgname}.datamgr.load.id", self.id)
 
-        if len(objdata) == 0 or "data" not in objdata:
+        if (not objdata) or ("data" not in objdata) or (len(objdata["data"])==0):
             self.log.error(f"event ({self.orgname}.datamgr.load.id) returned no data, aborting load")
             return False 
+
+        data = objdata["data"]
+        self.id           = int(data[0]['id'])
+        self.objecttype   = str(data[0]['objecttype'])
+        self.instancename = str(data[0]['instancename'])
+        self.active       = bool(data[0]['active'])
+        self.props = self.build_properties(data)
+        self.status = 'loaded'
+        self.data_changed = False 
+
+        self.log.info(f"object {self.eventprefix} loaded")
+        self.event.broadcast(f"{self.eventprefix}.loaded", id=self.id, type=self.objecttype, name=self.instancename, org=self.org)
+        return True
+
         
-        self.assign_object_data(objdata)
-        if not self.handlers_added: self.add_handlers()
-        self.log.info(f"object {self.orgname}.{self.objecttype}.{self.instancename} loaded")
 
 
     def save(self):
@@ -169,7 +142,7 @@ class sj_Object():
 
 
     def prop_add(self, propname:str, propvalue:str='', proptype:str='str', sort:int=500, varflag:bool = True, startts:str=''):
-        prop = sjprop.sj_Property(self, newdata={'id':self.id, 'propname':propname, 'propvalue':propvalue, 'proptype':proptype, 'sort':sort, 'varflag':varflag, 'startts':startts}, autosave=self.autosave, db_passthru=self.db_passthru )
+        prop = sjprop.sj_Property(self, propname, propvalue, proptype, sort, varflag, startts )
         self.props[prop.propname] = prop 
         self.log.debug(f'property added: {self.orgname}.{self.objecttype}.{self.instancename}.{propname} ({proptype}) = {propvalue}')
         return prop 

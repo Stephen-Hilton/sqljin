@@ -12,7 +12,7 @@ import util.sj_event  as sjevent
 import util.sj_logger as sjlog
 import util.sj_paths  as sjpaths
 
-import objects.sj_orgs     as sjorg   
+import objects.sj_org     as sjorg   
 import objects.sj_object   as sjobject  
 import objects.sj_property as sjprop 
 

@@ -39,6 +39,19 @@ class sj_Event():
         for fn in self.handlers[eventname]:
             rtn.append( fn(*args, **kwargs) )
         return rtn
+
+
+    def narrowcast(self, eventname, *args, **kwargs):
+        # confirm the event exists as a registered handler:
+        if not eventname in self.handlers:
+            self.log.warning(f'EVENT "{eventname}" was narrowcast, but has no handlers / listeners')
+            return None
+
+        # if has a handler, log and send the data off to the correct function for execution   
+        fn = self.handlers[eventname][0]
+        if eventname[:3] != 'log': self.log.debug(f'EVENT "{eventname}" was narrowcast and picked up by function: { str(fn.__name__) }')
+        return fn(*args, **kwargs)
+
         
     def setup_logging_events(self):
         self.log.debug('doing initial event handler population')
