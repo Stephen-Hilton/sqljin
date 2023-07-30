@@ -1,0 +1,17 @@
+{
+    "org_name": "Default"
+   ,"org_description": "This is the default organization, good for getting started or testing."
+   ,"org_contact_name": "Yourself"
+   ,"org_contact_email": "your.email.here@example.com"
+   ,"org_script_update_automatically": "True"
+   ,"org_script_folder_name": "./organizations/scripts/Default/"
+   ,"org_files": 
+   [
+        {"url": "https://github.com/raw/some/fileA.sqljin", "version":"1.22", "auto_update": "True", "unzip": "False"}
+       ,{"url": "https://github.com/raw/some/fileB.sqljin", "version":"1.22", "auto_update": "True", "unzip": "False"}
+       ,{"url": "https://github.com/raw/some/fileC.sqljin", "version":"1.22", "auto_update": "True", "unzip": "False"}
+       ,{"url": "https://github.com/raw/some/file1.zip"   , "version":"1.22", "auto_update": "True", "unzip": "True" }
+       ,{"url": "https://github.com/raw/some/file2.zip"   , "version":"1.22", "auto_update": "True", "unzip": "True" }
+       ,{"url": "https://github.com/raw/some/file3.zip"   , "version":"1.22", "auto_update": "True", "unzip": "True" }
+   ]
+}

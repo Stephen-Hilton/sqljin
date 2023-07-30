@@ -1,0 +1,11 @@
+{
+     "sqljin_description": "SQLJin is a flexible, script-based UI with a plugin-centric engine for combining SQL, Jinja, and Python to rapidly produce polished analytic outputs, for example, performing advanced analytics using DB and API calls, and auto-generating final charts and PPTx slides, all with one script."
+    ,"sqljin_version": "v0.01"
+    ,"sqljin_update_automatically": "True"
+    ,"sqljin_update_url": "https://github.com/some/repo"
+    ,"sqljin_update_engine": "./appcode/updater.py"
+    ,"sqljin_logger": "./appcode/log_handler.py"
+    ,"sqljin_error_handler": "./appcode/error_handler.py"
+    ,"sqljin_error_behavior": "STOP"
+    ,"output_folder": "./output/{{process_name}}--{{datetime}}/"
+}

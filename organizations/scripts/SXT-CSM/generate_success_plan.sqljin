@@ -1,0 +1,38 @@
+/* ASSIGN ALL PARMS */
+    /* load.parms.script-defaults (last value set wins) */
+    {% set process_name = ‘test process name’ %} 
+    {% set file_type = ‘csv’ %}
+    /* note, load.parms.application happens automatically */
+    {% load.parms.connection %}
+    {% load.parms.organization %}
+    {% load.parms.user %}
+    {% load.parms.dotenv %}
+    /* load.parms.script-overrides (last value set wins) */
+    {% set process_date = datetime.now(‘%Y-%m-%d’) %}
+;
+
+
+-- collect run details from control table: 
+{{ save.memory(memory_name = ‘first_table’) }}
+SELECT ColA, ColB, COLC FROM {{ schema }}.TableName 
+;
+
+
+-- iterate thru all records in first_table, and export from second
+{% for row in first_table  %}
+  {{ set filename = =‘second_’ + first_table[“ColB”] + ’.csv’ }}
+
+  {{ save.csv(file_name = filename) }}
+  SELECT ColA, ColB  FROM {{ schema }}.second_table
+  WHERE COLA = {{ first_table[‘COLA’] }} 
+  ;
+
+{% endfor %}
+
+
+-- transform the last saved csv into json, and submit to API
+{{ load.csv(file_name  = filename) }}
+{{ save.json(file_name = filename, memory_name = ‘last_json’) }}
+{{ exec.api (url = ’https://example.com’, data = last_json) }}
+;
+

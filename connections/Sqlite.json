@@ -1,0 +1,14 @@
+{
+     "connection_name": "SQLite DB File"
+    ,"connection_description": "SQLite is a database engine written in the C programming language. It is not a standalone app; rather, it is a library that software developers embed in their apps. As such, it belongs to the family of embedded databases."
+    ,"connection_sqljin_engine": "dbconn_sqlite3.py"
+    ,"connection_data_return": "json"
+    ,"connection_metadata_return": "None"
+    ,"connection_required_parms": ["username", "password", "connection_filename", "connection_folder_name"]
+    
+    ,"username": ""
+    ,"password": ""
+    ,"connection_filename": "Default.sqlite"
+    ,"connection_folder_name": "./connections/engines/sqlite_dbfiles/"
+    ,"connection_file_create_if_missing": "True"
+}

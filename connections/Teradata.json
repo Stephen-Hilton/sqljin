@@ -1,0 +1,13 @@
+{
+    "connection_name": "Teradata"
+   ,"connection_description": "Teradata is one of the popular Relational Database Management System. It is mainly suitable for building large scale data warehousing applications."
+   ,"connection_sqljin_engine": "dbconn_teradata.py"
+   ,"connection_data_return": "json"
+   ,"connection_metadata_return": "None"
+   ,"connection_required_parms": ["username", "password", "tdc_url"]
+
+   ,"username": ""
+   ,"password": ""
+   ,"tdc_url": ""
+   ,"tdc_rowlimit": "2000"
+}

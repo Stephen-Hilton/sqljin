@@ -1,0 +1,24 @@
+{
+     "org_name": "SxT-CSM"
+    ,"org_description": "Customer Success Team for Space and Time"
+    ,"org_contact_name": "Stephen Hilton"
+    ,"org_contact_email": "stephen.hilton@spaceandtime.io"
+    ,"org_script_update_automatically": "True"
+    ,"org_script_folder_name": "./organizations/scripts/SXT-CSM/"
+    ,"org_files": 
+    [
+         {"url": "https://github.com/raw/some/fileA.sqljin", "version":"1.22", "auto_update": "True", "unzip": "False"}
+        ,{"url": "https://github.com/raw/some/fileB.sqljin", "version":"1.22", "auto_update": "True", "unzip": "False"}
+        ,{"url": "https://github.com/raw/some/fileC.sqljin", "version":"1.22", "auto_update": "True", "unzip": "False"}
+        ,{"url": "https://github.com/raw/some/file1.zip"   , "version":"1.22", "auto_update": "True", "unzip": "True" }
+        ,{"url": "https://github.com/raw/some/file2.zip"   , "version":"1.22", "auto_update": "True", "unzip": "True" }
+        ,{"url": "https://github.com/raw/some/file3.zip"   , "version":"1.22", "auto_update": "True", "unzip": "True" }
+        ,{"url": "https://github.com/raw/some/errors.py"   , "version":"1.22", "auto_update": "True", "unzip": "False"}
+    ]
+
+    ,"NOTE": "below here are all overrides:"
+    
+    ,"sqljin_error_handler": "./organizations/scripts/SXT-CSM/errors.py"
+    ,"sqljin_update_automatically": "True"
+    ,"output_folder": "./output/{{process_name}}--{{datetime}}/"
+}

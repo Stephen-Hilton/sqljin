@@ -1,0 +1,17 @@
+{
+     "connection_name": "Space and Time - DB"
+    ,"connection_description": "Space and Time is the first decentralized data warehouse that connects on-chain and off-chain data to power a new generation of smart contract use cases."
+    ,"connection_sqljin_engine": "dbconn_spaceandtime.py"
+    ,"connection_data_return": "json"
+    ,"connection_metadata_return": "None"
+    ,"connection_required_parms": ["username", "public_key", "private_key", "sxt_api_url"]
+
+    ,"username": ""
+    ,"public_key": ""
+    ,"private_key": ""
+    ,"sxt_api_url": ""
+    ,"sxt_access_token": ""
+    ,"sxt_refresh_token": ""
+    ,"sxt_refresh_minutes": "20"
+    ,"sxt_rowlimit": "2000"
+}
